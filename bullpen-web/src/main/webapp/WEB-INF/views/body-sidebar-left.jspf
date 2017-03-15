@@ -1,0 +1,66 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!-- start: sidebar -->
+<aside id="sidebar-left" class="sidebar-left">
+
+    <div class="sidebar-header">
+        <div class="sidebar-title">
+            Navigation
+        </div>
+        <div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
+            <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+        </div>
+    </div>
+
+    <div class="nano">
+        <div class="nano-content">
+            <nav id="menu" class="nav-main" role="navigation">
+                <ul class="nav nav-main">
+                    <li <c:if test="${pageName == 'Dashboard'}">class="nav-active"</c:if>>
+                            <a href="/dashboard">
+                                <i class="fa fa-home" aria-hidden="true"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nav-parent <c:if test="${pageName.contains('Candidate') || pageName.contains('Workflow')}">nav-expanded nav-active</c:if>">
+                            <a>
+                                <i class="fa fa-users" aria-hidden="true"></i>
+                                <span>Candidates</span>
+                            </a>
+                            <ul class="nav nav-children">
+                                
+                                <li <c:if test="${pageName == 'Candidates'}">class="nav-active"</c:if>>
+                                    <a href="/candidates">
+                                        <i class="fa fa-search" aria-hidden="true"></i>
+                                        <span>Candidate Search</span>
+                                    </a>
+                                </li>
+                                <li <c:if test="${pageName == 'Add Candidates'}">class="nav-active"</c:if>>
+                                    <a href="/candidates/add">
+                                        <i class="fa fa-plus" aria-hidden="true"></i>
+                                        <span>Add Candidates</span>
+                                    </a>
+                                </li>
+                                
+                               
+                         
+                            </ul>
+                        </li>
+                       
+                    
+                        
+                    <li <c:if test="${pageName == 'Equipment'}">class="nav-active"</c:if>>
+                        <a href="/equipment">
+                            <i class="fa fa-laptop" aria-hidden="true"></i>
+                            <span>Equipment</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+
+</aside>
+<script src="/assets/javascripts/candidates.js"></script>
+<!-- end: sidebar -->

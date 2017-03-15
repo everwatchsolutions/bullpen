@@ -1,0 +1,20 @@
+<!-- Vendor -->
+<script src="/assets/vendor/jquery/jquery.js"></script>
+<script src="/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="/assets/vendor/nanoscroller/nanoscroller.js"></script>
+
+<script src="/assets/vendor/magnific-popup/magnific-popup.js"></script>
+<script src="/assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
+<script src="/assets/vendor/pnotify/pnotify.custom.js"></script>
+
+<script src="/assets/vendor/handlebars/handlebars-v2.0.0.js"></script>
+<script src="/assets/vendor/momentjs/moment.min.js"></script>
+
+<sec:authorize access="isAuthenticated()">
+    <script src="/assets/javascripts/common.js"></script>
+    <script src="/assets/vendor/sockjs/sockjs-0.3.4.min.js"></script>
+    <script src="/assets/vendor/stompjs/stomp.min.js"></script>
+    <script src="/assets/javascripts/notifications.js"></script>
+</sec:authorize>
+

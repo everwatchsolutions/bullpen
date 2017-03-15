@@ -1,0 +1,48 @@
+<div id="remove-skill-modal" class="zoom-anim-dialog modal-block modal-block-primary mfp-hide">
+    <section class="panel">
+        <form id="remove-skill-form" class="form-horizontal mb-lg" novalidate="novalidate" action="/remove-skill.json" method="post">
+            <header class="panel-heading">
+                <h2 class="panel-title">Remove Skill</h2>
+            </header>
+            <div class="panel-body">
+                <div class="col-sm-12 form-group mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label class="name-label">Please select a skill to remove.</label>
+                            <div class="input-group input-group-icon">
+                                <select name="skill" id="department" data-plugin-selectTwo class="form-control populate  placeholder" data-plugin-options='{"placeholder": "Select a Department", "allowClear": true }'>
+                                    <c:choose>
+                                        <c:when test="${skills != null && skills.size() > 0}">
+                                            <c:forEach var="cat" items="${skills.keySet()}">
+                                                <optgroup label="${cat}">
+                                                    <c:forEach var="item" items="${skills.get(cat)}">
+                                                        <option value="${item.name}" data-category="${cat}">${item.displayName}</option>
+                                                    </c:forEach>
+                                                </optgroup>
+                                            </c:forEach>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:forEach var="cat" items="${categories}">
+                                                <optgroup label="${cat.displayName}">
+                                                </optgroup>
+                                            </c:forEach>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            </div>
+            <footer class="panel-footer">
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <button type="sumbit" class="btn btn-primary modal-confirm">Submit</button>
+                        <button type="cancel" class="btn btn-default modal-dismiss">Cancel</button>
+                    </div>
+                </div>
+            </footer>
+        </form>
+    </section>
+</div>

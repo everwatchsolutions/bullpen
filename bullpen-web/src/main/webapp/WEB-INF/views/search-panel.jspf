@@ -1,0 +1,189 @@
+<section class="panel">
+    <form id="search-form" >
+        <header class="panel-heading">
+            <div class="panel-actions">
+
+                <a href="#" class="fa fa-caret-down" id="min"></a>
+            </div>
+
+            <h2 class="panel-title">Search</h2>
+        </header>
+        <div class="panel-body">
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-sm-12 mb-lg">
+                            <label>Name</label>
+                            <div class="input-group input-group-icon">
+                                <input id="name" name="name" type="text" class="form-control " placeholder="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 mb-lg">
+                            <label>Skills</label>
+                            <select name="skills" multiple data-plugin-selectTwo class="skill-select form-control populate">
+                                <c:forEach var="cat" items="${skills.keySet()}">
+                                    <optgroup label="${cat}">
+                                    <c:forEach var="item" items="${skills.get(cat)}">
+
+                                        <c:set var="isRequired" value="false"/>
+                                        <c:forEach var="rItem" items="${opening.requiredSkills}">
+                                            <c:if test="${item.name == rItem.competencyID}"><c:set var="isRequired" value="true"/></c:if>
+                                        </c:forEach>
+                                        <option value="${item.name}" <c:if test="${isRequired}">selected</c:if>>${item.displayName}</option>
+                                    </c:forEach>
+                                    </optgroup>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 mb-lg">
+                            <label>Certifications</label>
+                            <select name="certs" multiple data-plugin-selectTwo class="certification-select form-control populate">
+                                <c:forEach var="cat" items="${certifications.keySet()}">
+                                    <optgroup label="${cat}">
+                                    <c:forEach var="item" items="${certifications.get(cat)}">
+
+                                        <c:set var="isRequired" value="false"/>
+                                        <c:forEach var="rItem" items="${opening.requiredCertifications}">
+                                            <c:if test="${item.name == rItem.code}"><c:set var="isRequired" value="true"/></c:if>
+                                        </c:forEach>
+                                        <option value="${item.name}" <c:if test="${isRequired}">selected</c:if>>${item.displayName}</option>
+                                    </c:forEach>
+                                    </optgroup>
+                                </c:forEach>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-sm-8 mb-lg">
+                            <label>City</label>
+                            <div class="input-group input-group-icon">
+                                <input name="city" type="text" class="form-control " />
+                            </div>
+                        </div>
+                        <div class="col-sm-4 mb-lg">
+                            <label>State</label>
+                            <div class="input-group input-group-icon">
+                                <select name='state' data-plugin-selectTwo class="form-control populate  placeholder" data-plugin-options='{"placeholder": "Select a State", "allowClear": true }'>
+                                    <option selected value="">Select...</option>
+                                    <c:forEach var="state" items="${states}">
+                                        <option value="${state.abbreviation}" >${state.name}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 mb-lg">
+                            <label>Minimum Years of Experience</label>
+                            <div class="input-group input-group-icon">
+                                <input name="yearsOfExperience" type="text" class="form-control " placeholder="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div  <c:if test="${pageName != 'Openings'}" >  class="col-sm-12 mb-lg" </c:if><c:if test="${pageName == 'Openings'}" >  class="col-sm-12 mb-lg" </c:if> >
+                            <label>Minimum Education Level</label>
+                            <div class="input-group input-group-icon col-sm-6 mb-lg">
+                                <select name='educationLevel' data-plugin-selectTwo class="form-control populate  placeholder" data-plugin-options='{"placeholder": "Select a State", "allowClear": true }'>
+                                    <option disabled selected hidden value="none">Select...</option>
+                                    <c:forEach var="edu" items="${educationLevels}">
+                                        <option value="${edu.name}">${edu.displayName}</option>
+                                    </c:forEach>
+                                </select>
+                            </div></div>
+
+
+                    </div>
+
+                </div>
+               
+
+                    <c:if test="${pageName != 'Openings'}" >     <div class="col-sm-6 mb-lg"   >
+                            <label>Preferred Location</label>
+                            <div class="input-group input-group-icon">
+                                <select name="location" data-plugin-selectTwo class="form-control populate  placeholder" style="background-color: white; border-color: #CCC">
+                                      <option selected value="any">Any</option>
+                                    <option  value="${company.primaryAddress.cityName},${company.primaryAddress.state} ">${company.primaryAddress.cityName},${company.primaryAddress.state}</option>
+                                    <c:forEach items="${company.companyLocations}" var="location">
+                                        <option value="${location.cityName},${location.state}">${location.cityName},${location.state}</option>
+
+                                    </c:forEach>
+                                </select>
+                            </div> </div>
+
+                        <div class="col-sm-6 mb-lg">
+                            <label>Search For...</label>
+                            <select name='searchFor' data-plugin-selectTwo class="form-control populate  placeholder">
+                                <option  selected value="Active">Active Candidates</option>
+                                <option  value="All">All Candidates</option>
+                                <option  value="Archived"  <c:if test="${pageName == 'Archive Candidates'}" >selected </c:if>>Archived Candidates</option>
+                            </select>
+                        </div>
+
+
+            </div>        
+            <div class="row">
+                <div class="col-sm-6 mb-lg">
+                    <label>From</label>
+                    <div class="input-group input-group-icon">
+                        <input class="form-control datepicker" id="from" name="from" style="position: initial; height: 37px;">
+                    </div>
+                </div>
+                <div class="col-sm-6 mb-lg">
+                    <label>To</label>
+                    <div class="input-group input-group-icon">
+                        <input class="form-control datepicker" id="to" name="to" style="position: initial; height: 37px;">
+                    </div>
+                </div>
+
+
+                </c:if>
+
+            </div>    
+        </div>
+        <footer class="panel-footer">
+            <div class="row">
+                <div class="col-sm-12 text-right">
+                    <button type="reset" class="btn btn-danger hidden-xs">Clear</button>
+                    <button type="submit" class="btn btn-success hidden-xs">Search</button>
+                </div>
+            </div>
+        </footer>
+    </form>
+</section>
+<script src="/assets/vendor/jquery/jquery.js"></script>
+<script src="/assets/vendor/bootstrap-datepicker/js/boostrap-datepickers.js"></script>
+<script src="/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#to').datepicker({
+            format: 'mm/dd/yyyy',
+            endDate: 'now',
+            orientation: 'bottom'
+        });
+
+        $('#from').datepicker({
+            format: 'mm/dd/yyyy',
+            orientation: 'bottom',
+            endDate: 'now'
+        });
+
+        $("#to").change(function () {
+            var maxDate = $('#to').val();
+            $('#from').datepicker('setEndDate', maxDate);
+        });
+        $("#from").change(function () {
+            var minDate = $('#from').val();
+            $('#to').datepicker('setStartDate', minDate);
+        });
+
+    });
+</script>

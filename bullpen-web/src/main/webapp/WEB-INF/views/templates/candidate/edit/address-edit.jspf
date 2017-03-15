@@ -1,0 +1,35 @@
+<div id="address-template" class="col-sm-12 form-group mb-lg mfp-hide">
+    <div class="row">
+        <div class="col-sm-12 mb-lg">
+            <label>Address</label>
+            <div class="input-group input-group-icon">
+                <input name="loc-street-address" type="text" class="form-control " placeholder="ex: 123 Main Street" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 mb-lg">
+            <label>City</label>
+            <div class="input-group input-group-icon">
+                <input name="loc-city" type="text" class="form-control " />
+            </div>
+        </div>
+        <div class="col-sm-3 mb-lg">
+            <label>State</label>
+            <div class="input-group input-group-icon">
+                <select name='loc-state' class="form-control populate  placeholder">
+                    <!--<option disabled selected hidden>Select...</option>-->
+                    <c:forEach var="state" items="${states}">
+                        <option value="${state.abbreviation}">${state.name}</option>
+                    </c:forEach>
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-3 mb-lg">
+            <label>Zip Code</label>
+            <div class="input-group input-group-icon">
+                <input name="loc-zipcode" type="text" class="form-control " />
+            </div>
+        </div>
+    </div>
+</div>

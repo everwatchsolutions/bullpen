@@ -1,0 +1,15 @@
+<div id="note-file-template" class="col-sm-12 form-group mb-lg mfp-hide">
+    <label class="name-label">Title</label>
+    <div class="input-group input-group-icon">
+        <input name="note-title" type="text" class="edit-field form-control" autofocus="autofocus"/>
+    </div>
+    <label class="name-label">File Description</label>
+    <div class="input-group input-group-icon">
+        <textarea name="note-file-description" class="input-block-level" rows="18">
+        </textarea>
+    </div>
+    <label class="name-label">File</label>
+    <div class="input-group input-group-icon">
+        <input type="file" name="note-file" />
+    </div>
+</div>

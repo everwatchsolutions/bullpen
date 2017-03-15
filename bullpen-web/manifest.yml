@@ -1,0 +1,8 @@
+---
+applications:
+- name: ats-web
+  memory: 2G
+  path: target/ats-web.war
+  random-route: false
+  services:
+  - mongo-compose-io

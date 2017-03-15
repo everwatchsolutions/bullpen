@@ -1,0 +1,9 @@
+</div> <!-- end container --> 
+
+<div class="footer">
+    <div class="container">
+        <p class="text-muted">Created by <a href="http://acesinc.net">ACES Inc.</a></p>
+    </div>
+</div>
+
+<%@include file="bodyscripts.jspf" %>

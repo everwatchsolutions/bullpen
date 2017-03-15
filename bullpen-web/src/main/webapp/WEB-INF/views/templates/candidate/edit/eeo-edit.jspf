@@ -1,0 +1,59 @@
+<div id="eeo-template" class="col-sm-12 form-group mb-lg mfp-hide" <c:if test = "${user.getAuthority() != needed && user.getAuthority() != admin} "> style="display: none;" </c:if>>
+    <p>If the candidate already has EEO data this will overwrite the previous data. </p>
+    <div class="input-group input-group-icon">
+
+
+        <div class="col-md-6 mb-lg">
+            <label>Gender</label><br>
+            <input autofocus="autofocus"  type="radio" name="gender" value="Male"> Male<br>
+            <input autofocus="autofocus"  type="radio" name="gender" value="Female"> Female<br>
+            <input autofocus="autofocus"  type="radio" name="gender" value="Did not want to identify" checked="checked"> Did not want to self-identify <br><br>
+
+
+
+            <label>Race</label>
+            <select name='race' style="width:300px">
+                <option value="Did not want to identify" >Did not want to self-identify</option>
+                <option value="Hispanic or Latino" >Hispanic or Latino</option>
+                <option value="White" >White</option>
+                <option value="Black or African American" >Black or African America</option>
+                <option value="NativeHawaiianOther" >Native Hawaiian or Other Pacific Islander</option>
+                <option value="Asian" >Asian</option>
+                <option value="American Indian or Alaskan Native" >American Indian or Alaskan Native</option>
+                <option value="Two or More" >Two or More Races</option>
+
+
+            </select>
+
+
+            <br><br>
+            <label>Veteran</label>
+
+            <select name='vet' style="width:300px">
+                <option value="Did not want to identify" >They do not want to self-identify</option>
+                <option value="Yes" >They identify as one or more of the Classifications of Protected Veteran Listed Above</option>
+                <option value="No" >They are NOT a Protected Veteran</option>
+
+
+            </select>
+
+
+
+
+            <br><br>
+            <label>Disability</label>
+
+            <select name='dis' style="width:300px">
+                <option value="Did not want to identify" >They do not wish to Answer</option>
+                <option value="Yes" >Yes, They Have a Disability (or previously had a disability)</option>
+                <option value="No" >No, They Do NOT Have a Disability</option>
+
+
+            </select>
+
+
+
+
+        </div>
+    </div>
+</div>

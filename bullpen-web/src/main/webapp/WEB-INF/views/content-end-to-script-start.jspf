@@ -1,0 +1,8 @@
+
+<%@include file="body-content-end.jspf" %>
+<%@include file="body-main-end.jspf" %>
+
+<%@include file="body-sidebar-right.jspf" %>
+<%@include file="body-wrapper-end.jspf" %>
+
+<%@include file="body-scripts-start.jspf" %>

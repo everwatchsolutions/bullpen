@@ -1,0 +1,22 @@
+<div id="certifications-template" class="col-sm-12 form-group mb-lg mfp-hide">
+    <div class="row">
+        <div class="col-sm-12 mb-lg">
+            <label>Certifications  <!--a href="#newCertificationModal" class="create-new-certification" ><span class="label label-primary">Create New Certification</span></a--></label>
+            <select name="certs" multiple class="certification-select form-control populate">
+                <c:forEach var="cat" items="${certifications.keySet()}">
+                    <optgroup label="${cat}">
+                        <c:forEach var="item" items="${certifications.get(cat)}">
+
+                            <c:set var="isRequired" value="false"/>
+                            <c:forEach var="rItem" items="${opening.requiredCertifications}">
+                                <c:if test="${item.name == rItem.code}"><c:set var="isRequired" value="true"/></c:if>
+                            </c:forEach>
+                            <option value="${item.name}" <c:if test="${isRequired}">selected</c:if>>${item.displayName}</option>
+                        </c:forEach>
+                    </optgroup>
+                </c:forEach>
+
+            </select>
+        </div>
+    </div>
+</div>

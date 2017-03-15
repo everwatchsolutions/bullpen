@@ -1,0 +1,30 @@
+<section class="panel">
+    <form id="stateForm" class="form-horizontal mb-lg" novalidate="novalidate" action="/workflows/${workflow.shortName}/states/create.json" method="POST">
+        <header class="panel-heading">
+            <h2 class="panel-title">Create a new State</h2>
+        </header>
+
+        <div class="panel-body">
+            <div class="col-sm-12 form-group mb-lg">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <label class="name-label">Name</label>
+                        <div class="input-group input-group-icon">
+                            <input name="name" type="text" class="edit-field form-control input-sm" autofocus="autofocus"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            <input type="hidden" name="from" value="{{fromId}}"/>
+        </div>
+        <footer class="panel-footer">
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    <button class="btn btn-default modal-dismiss">Cancel</button>
+                    <button class="btn btn-success modal-confirm">Create</button>
+                </div>
+            </div>
+        </footer>
+    </form>
+</section>

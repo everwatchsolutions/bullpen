@@ -1,0 +1,30 @@
+<section class="panel">
+    <form id="renameStateForm" class="form-horizontal mb-lg" novalidate="novalidate" action="/workflows/${workflow.shortName}/states/{{stateName}}/rename" method="POST">
+        <header class="panel-heading">
+            <h2 class="panel-title">Rename State</h2>
+        </header>
+
+        <div class="panel-body">
+            <div class="col-sm-12 form-group mb-lg">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4>Set the new name for: {{stateDisplayName}}</h4>
+                        <label class="name-label">Name</label>
+                        <div class="input-group input-group-icon">
+                            <input name="name" type="text" class="edit-field form-control input-sm" autofocus="autofocus"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </div>
+        <footer class="panel-footer">
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    <button class="btn btn-default modal-dismiss">Cancel</button>
+                    <button class="btn btn-primary modal-confirm">Rename</button>
+                </div>
+            </div>
+        </footer>
+    </form>
+</section>

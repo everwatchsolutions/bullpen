@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-lg-9" >
+        <div class="post-image">
+            <div class="img-thumbnail">
+                <a href="#">
+                    <img src="/assets/images/post-thumb-1.jpg" alt="">
+                </a>
+            </div>
+        </div>
+        <div class="post-info">
+            <a href="#">${pos.employer}</a>
+            <div class="post-meta">
+                ${pos.startDate} - ${pos.endDate}
+            </div>
+            ${pos.positionTitle}
+        </div>
+    </div>
+    <div class="field-controls col-lg-3">
+        <a <aces:HistoryDetailsPopover history="${history}" fieldPrefix="/positionHistory/" uniqueId="${pos.uniqueId}" />></a>
+        <a href="#editModal" class="modal-with-form fa fa-edit" onclick="createEditPanel('/positionHistory', '${pos.uniqueId}', 'Enter new information', '${pos.employer}', '${pos.positionTitle}', '${pos.startDate}', '${pos.endDate}');"></a>
+        <form action="/candidate/${candidate.id}/removeProperty" method="POST">
+            <input type="hidden" name="fieldName" value="/positionHistory/${pos.uniqueId}" />
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            <a href="#" class="fa fa-times" onclick="$(this).closest('form').submit()"></a>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+<c:if test="${message != null}">
+    <div class="row">
+        <div class="col-lg-12 mb-lg">
+            <div class="alert alert-success text-center">
+                ${message}
+            </div>
+
+        </div>
+    </div>
+</c:if>
+<c:if test="${error}">
+    <div class="row">
+        <div class="col-lg-12 mb-lg">
+            <div class="alert alert-danger text-center">
+                <c:choose>
+                    <c:when test="${errMessage != null}">${errMessage}</c:when>
+                    <c:otherwise>An error occurred</c:otherwise>
+                </c:choose>
+            </div>
+
+        </div>
+    </div>
+</c:if>

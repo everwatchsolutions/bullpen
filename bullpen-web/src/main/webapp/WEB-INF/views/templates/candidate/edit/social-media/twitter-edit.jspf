@@ -1,0 +1,6 @@
+<div id="twitter-template" class="col-sm-12 form-group mb-lg mfp-hide">
+    <label class="name-label">Twitter URL</label>
+    <div class="input-group input-group-icon">
+        <input name="twitter" type="url" class="edit-field form-control input-sm" autofocus="autofocus"/>
+    </div>
+</div>

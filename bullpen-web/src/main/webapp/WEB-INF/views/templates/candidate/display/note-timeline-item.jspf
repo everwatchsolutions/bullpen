@@ -1,0 +1,75 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<li >
+    <div class="tm-box">
+
+        <h4>
+            <c:choose>
+                <c:when test="${note.name.equals('note-meeting')}">
+                    <i class="fa fa-calendar"></i>
+                </c:when> 
+                <c:otherwise>
+                    <i class="fa fa-file-text"></i>
+                </c:otherwise>
+            </c:choose>
+            ${note.getRequiredInfoFieldValue('note-title')}
+            <c:if test="${note.name.equals('note-file')}"><div class="pull-right"><a href="/view/file/${note.storedFile.storageId}" class="btn btn-primary">Download</a></div></c:if>
+        </h4>
+            <div class="panel-actions">
+                <form action="/candidate/${candidate.id}/removeProperty" method="POST">
+                    <a href="#editModal" class="modal-with-form fa fa-edit" onclick="createEditPanel('/notes', '${note.getRequiredInfoFieldValue('note-title')}', '${note.getRequiredInfoFieldValue('note-title')}', '${note.getRequiredInfoFieldValue('note-text')}');"></a>
+                    <input type="hidden" name="fieldName" value="/notes/${note.getRequiredInfoFieldValue('note-title')}" />
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <a href="#" class="fa fa-times" onclick="$(this).closest('form').submit()"></a>
+                </form>
+            </div>
+        <c:choose>
+            <c:when test="${note.name.equals('note-meeting')}">
+                <p>${note.getMeetingDescription()}</p>
+                <time datetime="<fmt:formatDate value='${note.getMeetingDate()}' pattern='yyyy-MM-dd HH:mm'/>" class="icon">
+                    <em><fmt:formatDate value="${note.getMeetingDate()}" pattern="EEEE @ hh:mm aa"/><br/>At: ${note.getMeetingLocation()}</em>
+                    <strong><fmt:formatDate value="${note.getMeetingDate()}" pattern="MMMMM yyyy"/></strong>
+                    <span><fmt:formatDate value="${note.getMeetingDate()}" pattern="dd"/></span>
+                </time>
+            </c:when>
+            <c:when test="${note.name.equals('note-file')}">
+                <p>${note.getFileDescription()} </p>
+                <div class=" mt-xlg mb-md">
+                    <c:choose>
+                        <c:when test="${note.viewUrl != null && note.viewUrl.startsWith('http')}">
+                            <iframe src="${note.viewUrl}?theme=dark" width="100%" height="800" allowfullscreen="allowfullscreen" style="border: none;"></iframe>
+                        </c:when>
+                        <c:when test="${note.viewUrl != null}">
+                            <img src="${note.viewUrl}" style="width:100%;" />
+                        </c:when>
+                        <c:otherwise>
+                            <h4>Sorry, we are unable to load a preview of this file.  You can try reloading or <a href="/view/file/${note.storedFile.storageId}" class="alternative-font">Download</a> the original file to view it that way.</h4>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </c:when>
+            <c:otherwise >
+                <c:forEach var="info" items="${note.requiredInfo}">
+                    <c:if test="${!info.name.equals('note-title')}">
+                        <c:choose>
+                            <c:when test="${info.type.equals('text') || info.type.equals('textarea')}">
+                                <p>${info.value}</p>
+                            </c:when>
+                            <c:when test="${info.type.equals('date')}">
+                                <time datetime="<fmt:formatDate value='${info.value}' pattern='yyyy-MM-dd HH:mm'/>" class="icon">
+                                    <em><fmt:formatDate value="${info.value}" pattern="EEEE @ hh:mm aa"/></em>
+                                    <strong><fmt:formatDate value="${info.value}" pattern="MMMMM yyyy"/></strong>
+                                    <span><fmt:formatDate value="${info.value}" pattern="dd"/></span>
+                                </time>
+                            </c:when>
+                            <c:when test="${info.type.equals('file')}">
+                                <p>${info.value}</p>
+                            </c:when>
+                        </c:choose>
+                    </c:if>
+                </c:forEach>
+            </c:otherwise>
+        </c:choose>
+
+        <p class="text-muted mb-none text-right">Note Created: <fmt:formatDate value="${note.dateCreated}" pattern="dd MMM yyyy @ HH:mm"/></p>
+</div>
+</li>

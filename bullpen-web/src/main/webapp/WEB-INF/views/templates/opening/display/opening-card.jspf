@@ -1,0 +1,40 @@
+<li class="col-lg-12">
+    <a href="{{url}}">
+        <section class="panel panel-featured-primary">
+            <div class="panel-body">
+                <div class="widget-summary widget-summary-lg">
+                    <div class="widget-summary-col widget-summary-col-icon">
+                        <div class="summary-icon {{#if active}}bg-success{{else}}bg-default{{/if}}">
+                            <i class="fa fa-suitcase"></i>
+                        </div>
+                    </div>
+                    <div class="widget-summary-col">
+                        <div class="summary">
+                            <div class="pull-right text-right">
+                                <div>
+                                Active: {{#if active}}
+                                            <span style="color:green;" class="fa fa-check"></span>
+                                        {{else}}
+                                            <span style="color:red;" class="fa fa-ban"></span>
+                                        {{/if}}
+                                </div>
+                                <div>
+                                    Location: {{location}}
+                                </div>
+                            </div>
+                            <h4 class="title">{{title}}</h4>
+                            <div class="info">
+                                <h5>{{department}}</h5>
+                            </div>
+                            
+                        </div>
+
+                        <div class="summary-footer">
+                            <a class="text-muted text-uppercase">Last Updated: {{lastUpdated}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </a>
+</li>

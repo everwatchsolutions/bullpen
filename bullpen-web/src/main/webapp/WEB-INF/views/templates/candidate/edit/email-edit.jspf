@@ -1,0 +1,6 @@
+<div id="email-template" class="col-sm-12 form-group mb-lg mfp-hide">
+    <label class="name-label">Email Address</label>
+    <div class="input-group input-group-icon">
+        <input name="email" type="email" class="edit-field form-control input-sm" autofocus="autofocus"/>
+    </div>
+</div>

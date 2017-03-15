@@ -1,0 +1,52 @@
+<div id="note-meeting-template" class="col-sm-12 form-group mb-lg mfp-hide">
+    <div class="row">
+        <div class="col-lg-12">
+
+            <label class="name-label">Title</label>
+            <div class="input-group input-group-icon">
+                <input name="note-title" type="text" class="edit-field form-control" autofocus="autofocus"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+
+            <label class="name-label">Location</label>
+            <div class="input-group input-group-icon">
+                <input name="note-meeting-location" type="text" class="edit-field form-control" />
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="row">
+        <div class="col-lg-6">
+            <label class="name-label">Meeting Date</label>
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                </span>
+                <input type="text" name="note-meeting-date" data-plugin-datepicker class="form-control">
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <label>Time</label>
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="fa fa-clock-o"></i>
+                </span>
+                <input type="text" name="note-meeting-time" data-plugin-timepicker class="form-control">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+
+            <label class="name-label">Description</label>
+            <div class="input-group input-group-icon">
+                <textarea name="note-meeting-description" class="input-block-level" rows="18"></textarea>
+            </div>
+        </div>
+    </div>
+
+</div>

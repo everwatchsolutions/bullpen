@@ -1,0 +1,12 @@
+<div class="row" style="padding-bottom:15px">
+    <p class="col-lg-12"><i class="fa fa-envelope mr-xs" ></i> <a href="mailto:${email.address}">${email.address}</a></p>
+    <div class="field-controls col-lg-12">
+        <a <aces:HistoryDetailsPopover history="${history}" fieldPrefix="/email/" uniqueId="${email.uniqueId}" />></a>
+        <a href="#editModal" class="modal-with-form fa fa-edit" onclick="createEditPanel('/email', '${email.uniqueId}', 'Enter a new email address', '${email.uniqueId}');"></a>
+        <form action="/candidate/${candidate.id}/removeProperty" method="POST">
+            <input type="hidden" name="fieldName" value="/email/${email.uniqueId}" />
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            <a href="#" class="fa fa-times" onclick="$(this).closest('form').submit()"></a>
+        </form>
+    </div>
+</div>

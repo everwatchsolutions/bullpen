@@ -1,0 +1,39 @@
+<div id="note-text-template" class="col-sm-12 form-group mb-lg mfp-hide">
+    <div class="note-template-selector" id="noteSelectorWrapper">
+        <label class="name-label">Preset Notes</label>
+        <div class="input-group input-group-icon">
+                <select class="form-control input-sm" id="templateSelector" style="z-index: 100000;" onchange="addText(this.value);">
+                    <option value="" selected="selected">Custom</option>
+                    <c:forEach var="n" items="${presetNotes.keySet()}">
+                        <option value="${presetNotes.get(n)}">${n}</option>
+                    </c:forEach>
+                </select>
+        </div>
+
+        
+        <label class="name-label">Title</label>
+        <div class="input-group input-group-icon">
+            <input id="title" name="note-title" type="text" class="edit-field form-control" autofocus="autofocus" placeholder="Enter a title here" value=""/>
+        </div>
+        
+        <label class="name-label">Text</label>
+        <div class="input-group input-group-icon">
+            <textarea id="text-area" name="note-text" class="input-block-level" rows="6" style="width:100%" value=""></textarea>
+        </div>
+
+        <script>
+            function addText(val) {
+            var newTitle = (document.getElementById("templateSelector")).options[(document.getElementById("templateSelector")).selectedIndex].text;
+            if(newTitle === "Custom"){
+                document.getElementById("title").value = "";
+            } else {
+                document.getElementById("title").value = newTitle;
+            }
+            
+            document.getElementById("text-area").value = val;
+            var list = document.getElementsByClassName("note-editable");
+            list[0].innerHTML = val;
+        }
+        </script>
+    </div>
+</div>

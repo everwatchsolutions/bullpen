@@ -1,0 +1,44 @@
+<li class="col-lg-4 col-md-8 col-sm-12">
+    <section class="panel">
+        <a href="{{url}}">
+            <header class="panel-heading bg-primary">
+
+                <div class="widget-profile-info">
+                    <div class="profile-picture">
+                        <img src="{{imageUrl}}">
+                    </div>
+                    <div class="profile-info">
+                        <h4 class="name text-semibold" >{{name}}</h4>
+                        <h5 class="role">{{title}}</h5>
+                        <div class="profile-footer">
+                            Last Contact: {{lastContact}}
+                        </div>
+                    </div>
+                </div>
+            </header>
+        </a>
+        <div class="panel-body" style="height: 150px;">
+            {{#each emails}}
+            <div class="row">
+                <div class="col-lg-12">
+                    <i class="fa fa-fw fa-envelope"></i>
+                    <a href="mailto:{{this.email}}">{{this.email}}</a>
+                </div>
+            </div>
+            {{/each}}
+            {{#each phones}}
+            <div class="row">
+                <div class="col-lg-12">
+                    <i class="fa fa-fw fa-phone"></i>
+                    {{this.number}}
+                </div>
+            </div>
+            {{/each}}
+            <div class="row">
+                <div class="col-lg-12">
+                    <i class="fa fa-fw fa-file"></i><a href="{{resumeUrl}}"> {{resumeName}}</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</li>

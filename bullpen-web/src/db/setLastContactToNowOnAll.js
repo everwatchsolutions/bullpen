@@ -1,0 +1,1 @@
+db.candidate.update({}, {$set: { 'lastContact': new Date() }},{'multi': true});

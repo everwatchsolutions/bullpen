@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>net.acesinc.ats</groupId>
+    <artifactId>bullpen-system</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0.0</version>
+    
+    <distributionManagement>
+        <repository>
+            <id>deployment</id>
+            <name>Internal Releases</name>
+            <url>http://ec2-107-21-105-62.compute-1.amazonaws.com:8081/nexus/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>deployment</id>
+            <name>Internal Releases</name>
+            <url>http://ec2-107-21-105-62.compute-1.amazonaws.com:8081/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+    
+    <modules>
+        <module>bullpen-model</module>
+        <module>bullpen-web</module>
+        <!--module>ats-ui</module-->
+    </modules>
+    <name>bullpen-system</name>
+</project>

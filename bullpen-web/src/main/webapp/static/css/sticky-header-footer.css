@@ -1,0 +1,87 @@
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    background-color: #f5f5f5;
+}
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+body > .container {
+    padding: 60px 15px 0;
+}
+.container .text-muted {
+    margin: 20px 0;
+}
+
+.footer > .container {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+code {
+    font-size: 80%;
+}
+
+.spacer {
+    margin-top: 40px;
+}
+
+.ex-tooltip{
+    position:absolute;
+    background:#EEE;
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    -ms-border-radius:3px;
+    -o-border-radius:3px;
+    border-radius:3px;
+    padding:5px;
+    -webkit-box-shadow:0 1px 3px #000;
+    -moz-box-shadow:0 1px 3px #000;
+    -ms-box-shadow:0 1px 3px #000;
+    -o-box-shadow:0 1px 3px #000;
+    box-shadow:0 1px 3px #000;
+    border-collapse:separate;
+    display:none
+}
+
+.color0 { color: #3880aa; }
+.color1 { color: #4da944; }
+.color2 { color: #f26522; }
+.color3 { color: #c6080d; }
+.color4 { color: #672d8b; }
+.color5 { color: #ce1797; }
+
+
+/*.legend-item {
+    width: 20px;
+    height: 20px;
+    
+}*/
+
+.legend li {
+    list-style: none;
+    font-size: 20px;
+}
+
+.legend li:before {
+    content:"·";
+    font-size:120px;
+    vertical-align:top;
+    line-height:20px;
+}

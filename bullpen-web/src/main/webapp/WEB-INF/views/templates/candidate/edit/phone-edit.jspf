@@ -1,0 +1,6 @@
+<div id="phone-template" class="col-sm-12 form-group mb-lg mfp-hide">
+    <label class="name-label">Phone Number</label>
+    <div class="input-group input-group-icon">
+        <input name="number" type="tel" class="edit-field form-control input-sm" autofocus="autofocus"/>
+    </div>
+</div>

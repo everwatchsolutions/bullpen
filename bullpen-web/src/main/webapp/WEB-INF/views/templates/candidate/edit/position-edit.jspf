@@ -1,0 +1,31 @@
+<div id="positionHistory-template" class="col-sm-12 form-group mb-lg mfp-hide">
+    <div class="row">
+        <div class="col-sm-12 mb-lg">
+            <label>Employer Name</label>
+            <div class="input-group input-group-icon">
+                <input name="emp-name" type="text" class="form-control " placeholder="Google" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 mb-lg">
+            <label>Position Title</label>
+            <div class="input-group input-group-icon">
+                <input name="emp-pos-title" type="text" class="form-control " placeholder="Software Engineer" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <label>Employment Dates</label>
+            <div class="input-daterange input-group" data-plugin-datepicker>
+                <span class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                </span>
+                <input type="text" class="form-control start-date" name="emp-start-date">
+                <span class="input-group-addon">to</span>
+                <input type="text" class="form-control end-date" name="emp-end-date">
+            </div>
+        </div>
+    </div>
+</div>

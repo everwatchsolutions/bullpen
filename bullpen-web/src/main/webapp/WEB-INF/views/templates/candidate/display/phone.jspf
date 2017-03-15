@@ -1,0 +1,12 @@
+<div class="row" style="padding-bottom:15px">
+    <p class="col-lg-12"><i class="fa fa-phone mr-xs" ></i> ${phone.number}</p>
+    <div class="field-controls col-lg-12">
+        <a <aces:HistoryDetailsPopover history="${history}" fieldPrefix="/phone/" uniqueId="${phone.uniqueId}" />></a>
+        <a href="#editModal" class="modal-with-form fa fa-edit" onclick="createEditPanel('/phone', '${phone.uniqueId}', 'Enter a new phone number', '${phone.uniqueId}');"></a>
+        <form action="/candidate/${candidate.id}/removeProperty" method="POST">
+            <input type="hidden" name="fieldName" value="/phone/${phone.uniqueId}" />
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            <a href="#" class="fa fa-times" onclick="$(this).closest('form').submit()"></a>
+        </form>
+    </div>
+</div>

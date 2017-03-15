@@ -1,0 +1,5 @@
+target/
+catalog.xml
+.DS_Store
+nbactions.xml
+*.idea/*

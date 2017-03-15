@@ -1,0 +1,93 @@
+<link rel="stylesheet" href="/assets/vendor/summernote/summernote.css" />
+
+<section class="panel">
+    <form id="actionForm" class="form-horizontal mb-lg" novalidate="novalidate" action="/workflows/${workflow.shortName}/statetransitions/attachment/add.json" method="POST">
+        <header class="panel-heading">
+            <h2 class="panel-title">Add Attachment to State Transition {{fromName}} <i class="fa-long-arrow-right fa"></i> {{toName}}</h2>
+        </header>
+
+        <div class="panel-body">
+            <div class="col-sm-12 form-group mb-lg">
+                {{#if showNoActionLabel}}
+                <h4>There are no Attachments associated with this State Transition</h4>
+                {{/if}}
+                <div class="row">
+                    <div class="col-lg-12">
+                        {{#if showNoActionLabel}}
+                        <label class="name-label">Which Attachment would you like to add?</label>
+                        {{else}}
+                        <label class="name-label">Choose an Attachment to add:</label>
+                        {{/if}}
+                        <div class="input-group input-group-icon">
+                            <select  name='action' id="action" class="form-control populate">
+                                <c:forEach var="a" items="${actions}">
+                                    <option value="${a.name}">${a.displayName}</option>
+                                </c:forEach>
+                                <c:forEach var="n" items="${availableNotes}">
+                                    <option value="${n.name}">${n.displayName}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="notfication">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <label>Email Recipient</label>
+                        <div class="">
+                            <input name="requiredInfo-emailRecipient" class="edit-field form-control" autofocus="autofocus" value="" type="text">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <label>Email Sender</label>
+                        <div class="">
+                            <input name="requiredInfo-emailSender" class="edit-field form-control" autofocus="autofocus" value="donotreply@polarisats.com" type="text">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <label>Email Subject</label>
+                        <div class="">
+                            <input name="requiredInfo-emailSubject" class="edit-field form-control" autofocus="autofocus" type="text">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <label>Email Body</label>
+                        <textarea name="requiredInfo-emailBody"  id="summernote" rows="30">
+                              
+                        </textarea>
+                    </div>
+                </div> </div>
+
+
+            </div>
+
+
+            <div class="row" ><br>
+                <div class="col-lg-12"id="options">
+                    <div class="input-group input-group-icon" id="optional">
+                        <label class="name-label">Mark Attachment as Optional?</label>
+                        <input type="checkbox" name="optional" />
+                    </div>
+                </div>
+            </div>
+
+
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            <input type="hidden" name="transition" value="{{transitionName}}"/>
+            <footer class="">
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <button class="btn btn-default modal-dismiss">Cancel</button>
+                        <button class="btn btn-success modal-confirm">Add</button>
+                    </div>
+                </div>
+            </footer>
+    </form>
+</section>

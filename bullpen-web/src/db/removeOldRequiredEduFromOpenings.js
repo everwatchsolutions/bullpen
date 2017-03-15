@@ -1,0 +1,1 @@
+db.opening.update({}, {$unset: {requiredEducation: ""}}, false, true);

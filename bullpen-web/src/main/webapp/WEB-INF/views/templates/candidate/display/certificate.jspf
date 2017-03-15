@@ -1,0 +1,9 @@
+<span class="label label-primary" style="margin-right: 5px;">
+    ${cert.certificationName}
+    <a <aces:HistoryDetailsPopover history="${history}" fieldPrefix="/certifications/" uniqueId="${cert.uniqueId}" /> style="margin-left: 2px;"></a>
+    <form action="/candidate/${candidate.id}/removeProperty" method="POST" style="display: inline;">
+        <input type="hidden" name="fieldName" value="/certifications/${cert.uniqueId}" />
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <a href="#" class="fa fa-times" style="color: white" onclick="$(this).closest('form').submit()"></a>
+    </form>
+</span>

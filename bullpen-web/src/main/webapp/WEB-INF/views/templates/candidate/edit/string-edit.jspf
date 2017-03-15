@@ -1,0 +1,6 @@
+<div id="string-template" class="col-sm-12 form-group mb-lg mfp-hide">
+    <label class="name-label"></label>
+    <div class="input-group input-group-icon">
+        <input name="newValue" type="text" class="edit-field form-control input-lg" autofocus="autofocus"/>
+    </div>
+</div>

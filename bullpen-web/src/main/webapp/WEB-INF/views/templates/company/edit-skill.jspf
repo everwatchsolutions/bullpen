@@ -1,0 +1,38 @@
+<section class="panel">
+    <form id="edit-skill-form" class="form-horizontal mb-lg" novalidate="novalidate" action="/skill.json" method="post">
+        <header class="panel-heading">
+            <h2 class="panel-title">Edit Skill</h2>
+        </header>
+        <div class="panel-body">
+            <div class="form-group mt-lg">
+                <label class="col-sm-3 control-label">Name</label>
+                <div class="col-sm-9">
+                    <input type="text" name="label" class="form-control" placeholder="A name for this item..." required value="{{label}}"/>
+                </div>
+            </div>
+            <div class="form-group mt-lg">
+                <label class="col-sm-3 control-label">Category</label>
+                <div class="col-sm-9">
+                    <select name='category' class="form-control populate">
+                        {{#selectText category}}
+                        <c:forEach var="cat" items="${categories}" >
+                            <option value="${cat.name}" >${cat.displayName}</option>
+                        </c:forEach>
+                        {{/selectText}}
+                    </select>
+                </div>
+            </div>
+
+            <input type="hidden" name="origLabel" value="{{label}}"/>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </div>
+        <footer class="panel-footer">
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    <button type="sumbit" class="btn btn-primary modal-confirm">Submit</button>
+                    <button type="cancel" class="btn btn-default modal-dismiss">Cancel</button>
+                </div>
+            </div>
+        </footer>
+    </form>
+</section>

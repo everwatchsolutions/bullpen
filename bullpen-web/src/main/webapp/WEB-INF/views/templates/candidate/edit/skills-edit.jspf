@@ -1,0 +1,21 @@
+<div id="personCompetencies-template" class="col-sm-12 form-group mb-lg mfp-hide">
+    <div class="row">
+        <div class="col-sm-12 mb-lg">
+            <label>Skills  <!--a href="#newSkillModal" class="create-new-skill" ><span class="label label-primary">Create New Skill</span></a--></label>
+            <select name="skills" multiple class="skill-select form-control populate">
+                <c:forEach var="cat" items="${skills.keySet()}">
+                    <optgroup label="${cat}">
+                        <c:forEach var="item" items="${skills.get(cat)}">
+
+                            <c:set var="isRequired" value="false"/>
+                            <c:forEach var="rItem" items="${opening.requiredSkills}">
+                                <c:if test="${item.name == rItem.competencyID}"><c:set var="isRequired" value="true"/></c:if>
+                            </c:forEach>
+                            <option value="${item.name}" <c:if test="${isRequired}">selected</c:if>>${item.displayName}</option>
+                        </c:forEach>
+                    </optgroup>
+                </c:forEach>
+            </select>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<div class="row" style="padding-bottom:15px">
+   <p class="col-lg-12"><i class="fa fa-globe mr-xs" ></i> <a class="addressClick"  target="blank_"href="${web.address}">${web.getTrimmedAddress()}</a></p>
+   <div class="field-controls col-lg-12">
+       <a <aces:HistoryDetailsPopover history="${history}" fieldPrefix="/web/" uniqueId="${web.uniqueId}" />></a>
+       <a href="#editModal" class="modal-with-form fa fa-edit" onclick="createEditPanel('/web', '${web.uniqueId}', 'Enter a new web site', '${web.uniqueId}');"></a>
+       <form action="/candidate/${candidate.id}/removeProperty" method="POST">
+           <input type="hidden" name="fieldName" value="/web/${web.uniqueId}" />
+           <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+           <a href="#" class="fa fa-times" onclick="$(this).closest('form').submit()"></a>
+       </form>
+   </div>
+</div>
+<script>
+// Make sure its a valid URL by adding HTTP:// if it isnt already there
+   $(".addressClick").click(function () {
+       var addressValue = $(this).attr("href");
+       if (addressValue.toLowerCase().indexOf("http") < 0)
+       {
+           addressValue = "http://"+addressValue;
+       }
+       $(this).attr("href", addressValue);
+   });
+</script>

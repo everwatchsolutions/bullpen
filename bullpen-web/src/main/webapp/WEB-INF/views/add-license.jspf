@@ -1,0 +1,45 @@
+<div id="addLicense" class="modal-block modal-block-primary mfp-hide">
+    <section class="panel">
+        <form action="/license/add" method="post" <c:if test = "${user.getAuthority() == normal}"> style="display: none;" </c:if>>
+            <div class="panel-heading" align="center">
+            <h2 class="panel-title">Add Product License</h2>
+            </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-4">
+                    <p align="center"><b>Product Name:</b></p>
+                </div>
+                <div class="col-lg-5">
+                    <input name="productName" type="text" class="form-control"/>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-lg-4">
+                    <p align="center"><b>License Key:</b></p>
+                </div>
+                <div class="col-lg-6">
+                    <input name="licenseKey" type="text" class="form-control"/>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-lg-4">
+                    <p align="center"><b>Expiration Date:</b></p>
+                </div>
+                <div class="col-lg-4">
+                    <input name="expirationDateString" type="text" class="form-control pick-date"/>
+                </div>
+            </div>
+            <br/>
+            <div class="row pull-right">
+                <div class="col-lg-12" align="center">
+                    <button type="submit" class="btn btn-success"><i style="color:white" class="fa fa-floppy-o" aria-hidden="true"></i> | Save License</button>
+                    <button class="btn btn-danger modal-dismiss">Cancel</button>
+                </div>
+            </div>
+        </div>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form>
+    </section>
+</div>
