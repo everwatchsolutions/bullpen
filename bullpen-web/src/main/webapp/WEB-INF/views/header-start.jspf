@@ -8,9 +8,9 @@
         <!-- Basic -->
         <meta charset="UTF-8">
 
-        <title>${pageName} | Polaris ATS</title>
-        <meta name="keywords" content="Polaris ATS Applicant Tracking Resume CV" />
-        <meta name="description" content="Polaris Applicant Tracking System">
+        <title>${pageName} | Bullpen</title>
+        <meta name="keywords" content="Bullpen Business Employee Portal OnBoarding Landing Page HR" />
+        <meta name="description" content="Bullpen Business Landing Page">
         <meta name="author" content="acesinc.net">
 
         <sec:csrfMetaTags />

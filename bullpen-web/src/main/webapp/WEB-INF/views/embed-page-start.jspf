@@ -8,7 +8,7 @@
         <!-- Basic -->
         <meta charset="UTF-8">
 
-        <title>${pageName} | Polaris ATS</title>
+        <title>${pageName} | Bullpen</title>
 
         <sec:csrfMetaTags />
 
