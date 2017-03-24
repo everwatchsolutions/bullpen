@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
         <groupId>net.acesinc.ats</groupId>
-        <artifactId>applicant-tracking-system</artifactId>
+        <artifactId>bullpen-system</artifactId>
         <version>1.0.0</version>
     </parent>
     
@@ -38,13 +38,8 @@
     <dependencies>
         <dependency>
             <groupId>net.acesinc.ats</groupId>
-            <artifactId>ats-model</artifactId>
+            <artifactId>bullpen-model</artifactId>
             <version>1.0.0-BUILD-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>net.acesinc.ats</groupId>
-            <artifactId>ats-resume-parser</artifactId>
-            <version>1.0.0</version>
         </dependency>
         <!-- Spring -->
         <dependency>
@@ -245,6 +240,12 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.4</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+            <type>jar</type>
         </dependency>
     </dependencies>
     <repositories>

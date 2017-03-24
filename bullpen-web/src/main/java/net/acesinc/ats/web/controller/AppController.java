@@ -6,33 +6,32 @@
 package net.acesinc.ats.web.controller;
 
 import java.security.Principal;
+import java.util.List;
+import net.acesinc.ats.model.common.Website;
 import net.acesinc.ats.model.company.Application;
 import net.acesinc.ats.model.company.Company;
 import net.acesinc.ats.model.user.User;
-import net.acesinc.ats.web.repository.CandidateRepository;
 import net.acesinc.ats.web.repository.CompanyRepository;
 import net.acesinc.ats.web.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
- * @author andrewserff
+ * @author dylan
  */
 @Controller
-public class DashboardController {
+public class AppController {
 
 
     @Autowired
     private CompanyRepository companyRepo;
-    @Autowired
-    private CandidateRepository candidateRepo;
     @Autowired
     private UserRepository userRepo;
     @Autowired
@@ -40,22 +39,38 @@ public class DashboardController {
 
     private static final Logger log = LoggerFactory.getLogger(SearchController.class);
 
-    @RequestMapping(value = {"/dashboard"}, method = RequestMethod.GET)
-    public String getHomepage(Principal user, ModelMap model) {
+    @RequestMapping(value = {"/createapp"}, method = RequestMethod.GET)
+    public String getCreateApp(Principal user, ModelMap model) {
+        model.addAttribute("pageName", "Create App");
+        return "create_app";
+    }
+    
+    @RequestMapping(value = {"/createapplication"}, method = RequestMethod.POST)
+    public String createApp(Principal user, ModelMap model, @RequestParam("name") String name,
+            @RequestParam("description") String description,@RequestParam("url") String url) {
         model.addAttribute("pageName", "Dashboard");
+       System.out.println("creating app..");
+       System.out.println(name + " "  + description + " " +url);
+       
         User u = userRepo.findByEmail(user.getName());
         Company c = u.getCompany();
-        model.addAttribute("companies", companyRepo.findAll());
-        model.addAttribute("apps", c.getApplications());
-        
-        if(c.getApplications() != null){
-        for(Application a: c.getApplications())
-        {
-            System.out.print(a.getUrl());
-        }}
 
-        return "dashboard";
+        Application a = new Application(name,description);
+        //POC p = new POC();
+        
+        Website w = new Website();
+        w.setAddress(url);
+        a.setUrl(w);
+        List<Application> apps = c.getApplications();
+        apps.add(a);
+        c.setApplications(apps);
+        
+        companyRepo.save(c);
+       
+        return "redirect:/dashboard";
     }
+    
+    
 
    
 

@@ -7,9 +7,9 @@ package net.acesinc.ats.web.service;
 
 import net.acesinc.ats.model.candidate.Candidate;
 import net.acesinc.ats.model.candidate.notes.CandidateNote;
-import net.acesinc.ats.model.opening.Opening;
+
 import net.acesinc.ats.model.user.User;
-import net.acesinc.ats.model.workflow.WorkflowState;
+
 import net.acesinc.ats.web.data.CandidateUpdateNotification;
 import net.acesinc.ats.web.data.MessageNotification;
 import net.acesinc.ats.web.data.Notification;
@@ -36,38 +36,9 @@ public class NotificationService {
     private SimpMessagingTemplate brokerChannel;
 
     
-    public void nofifyUsersOfCandidateNote(Candidate c, CandidateNote note, User editor) {
-        if (c.getInterestedUsers() != null) {
-            log.debug("Notifying " + c.getInterestedUsers().size() + " users of new Note for Candidate [ " + c.getFormattedName() + " ]");
-            for (User u : c.getInterestedUsers()) {
-                notifyUserOfCandidateNote(u, c, note, editor);
-            }
-        }
-    }
-    public void notifyUsersOfCandidateStateTransition(Candidate c, WorkflowState oldState, WorkflowState newState, User editor) {
-        if (c.getInterestedUsers() != null) {
-            log.debug("Notifying " + c.getInterestedUsers().size() + " users of new Workflow State for Candidate [ " + c.getFormattedName() + " ]");
-            for (User u : c.getInterestedUsers()) {
-                notifyUserOfStateTransition(u, c, oldState, newState, editor);
-            }
-        }
-    }
+   
     
-    public void notifyUserOfCandidateNote(User u, Candidate c, CandidateNote note, User editor) {
-        String subject = "Candidate " + c.getFormattedName() + " has been updated";
-        doCandidateNotify(u, c, subject);
-        emailService.sendUserCandidateNoteAddedEmail(u, subject, c, note, editor);
-    }
-    public void notifyUserOfStateTransition(User u, Candidate c, WorkflowState oldState, WorkflowState newState, User editor) {
-        String subject = "Candidate " + c.getFormattedName() + " now in State " + newState.getDisplayName();
-        doCandidateNotify(u, c, subject);
-        emailService.sendUserCandidateStateTransitionEmail(u, subject, c, oldState, newState, editor);
-    }
-    public void nofifyUserOfApplicantForOpening(User u, Candidate applicant, Opening o) {
-        String subject = "Application Recieved for Opening " + o.getPositionTitle() + "!";
-        doCandidateNotify(u, applicant, subject);
-        emailService.sendApplicationRecievedEmail(u, applicant, o);
-    }
+   
     public void sendEmail(String to, String from,String subject, String body)
     {
         emailService.sendEmail(to, from, subject, body);

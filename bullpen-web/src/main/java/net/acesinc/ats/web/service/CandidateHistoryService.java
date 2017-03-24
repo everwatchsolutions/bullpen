@@ -20,7 +20,6 @@ import net.acesinc.ats.model.common.ValueHistory;
 import net.acesinc.ats.model.common.ValueSource;
 import net.acesinc.ats.model.converter.ModelConverter;
 import net.acesinc.ats.model.converter.candidate.CandidateModelConverterFactory;
-import net.acesinc.ats.resume.parser.impl.ACESResumeParser;
 import net.acesinc.ats.web.repository.CandidateHistoryRepository;
 import net.acesinc.ats.web.repository.CandidateRepository;
 import org.apache.log4j.BasicConfigurator;
@@ -103,73 +102,73 @@ public class CandidateHistoryService {
     }
     
     public static void main(String[] args) {
-        ConsoleAppender console = new ConsoleAppender();
-        String PATTERN = "%d [%p|%c|%C{1}] %m%n";
-        console.setLayout(new PatternLayout(PATTERN));
-        console.setThreshold(Level.DEBUG);
-        console.activateOptions();
-        BasicConfigurator.configure(console);
-
-//                String resumeFile = "/Users/andrewserff/Downloads/RandomResume.pdf";
-        String resumeFile = "/Users/andrewserff/Dropbox/Documents/Work/Resume/AndrewSerffResume-ACES.pdf";
-//        String resumeFile = "/Users/andrewserff/Desktop/Test Resumes/Benjamin R Fancher_CSA_GA.docx";
-//        String resumeFile = "/Users/andrewserff/Desktop/Test Resumes/AndrewSerffResume-ACES.pdf";
-        File resume = new File(resumeFile);
-        if (resume.exists()) {
-            Map<String, String> config = new HashMap<>();
-            ACESResumeParser parser = new ACESResumeParser(config);
-
-            try {
-                String hrxml = parser.getHRXMLForResume(resume);
-//                log.info("HRXML response: " + hrxml);
-
-                ModelConverter<Candidate> converter = CandidateModelConverterFactory.getModelConverterForData(hrxml);
-                Candidate c = converter.getModelFromData(hrxml);
-
-                if (c == null) {
-                    log.error("Candidate is null...didn't convert");
-                } else {
-                    log.info("We converted the Candidate " + c.getFormattedName() + "!");
-
-                    //now tell us what is different. 
-                    CandidateHistoryService differ = new CandidateHistoryService();
-                    CandidateHistory hist = differ.diffCandidates(null, c, ValueSource.AUTOMATIC);
-
-                    for (String propName : hist.getPropertyHistoryMap().keySet()) {
-                        log.debug("History for prop : " + propName + ": " + hist.getPropertyHistoryMap().get(propName));
-                    }
-
-                    log.info("---------------Creating Copy and Changing Values---------------");
-                    Candidate c2 = c.createCopy();
-
-                    //change something
-                    c2.setGivenName("Bob");
-                    c2.setFamilyName("Ross");
-
-                    //add a few things
-                    Phone phone = new Phone();
-                    phone.setNumber("555-555-5555");
-                    c2.getPhone().add(phone);
-                    Email email = new Email();
-                    email.setAddress("me@example.com");
-                    email.setLabel(ContactType.personal);
-                    email.setPreferred(PreferenceType.primary);
-                    c2.getEmail().add(email);
-
-                    //remove something
-                    c2.getPersonCompetencies().remove(0);
-
-                    CandidateHistory hist2 = differ.diffCandidates(c, c2, ValueSource.MANUAL, "abserff");
-
-                    for (String propName : hist2.getPropertyHistoryMap().keySet()) {
-                        log.debug("History for prop : " + propName + ": " + hist2.getPropertyHistoryMap().get(propName));
-                    }
-
-                }
-            } catch (IOException ex) {
-                log.error("Error parsing resume [ " + resume.getAbsolutePath() + " ]", ex);
-            }
-        }
-    }
+//        ConsoleAppender console = new ConsoleAppender();
+//        String PATTERN = "%d [%p|%c|%C{1}] %m%n";
+//        console.setLayout(new PatternLayout(PATTERN));
+//        console.setThreshold(Level.DEBUG);
+//        console.activateOptions();
+//        BasicConfigurator.configure(console);
+//
+////                String resumeFile = "/Users/andrewserff/Downloads/RandomResume.pdf";
+//        String resumeFile = "/Users/andrewserff/Dropbox/Documents/Work/Resume/AndrewSerffResume-ACES.pdf";
+////        String resumeFile = "/Users/andrewserff/Desktop/Test Resumes/Benjamin R Fancher_CSA_GA.docx";
+////        String resumeFile = "/Users/andrewserff/Desktop/Test Resumes/AndrewSerffResume-ACES.pdf";
+//        File resume = new File(resumeFile);
+//        if (resume.exists()) {
+//            Map<String, String> config = new HashMap<>();
+//            
+//
+//            try {
+//                String hrxml = parser.getHRXMLForResume(resume);
+////                log.info("HRXML response: " + hrxml);
+//
+//                ModelConverter<Candidate> converter = CandidateModelConverterFactory.getModelConverterForData(hrxml);
+//                Candidate c = converter.getModelFromData(hrxml);
+//
+//                if (c == null) {
+//                    log.error("Candidate is null...didn't convert");
+//                } else {
+//                    log.info("We converted the Candidate " + c.getFormattedName() + "!");
+//
+//                    //now tell us what is different. 
+//                    CandidateHistoryService differ = new CandidateHistoryService();
+//                    CandidateHistory hist = differ.diffCandidates(null, c, ValueSource.AUTOMATIC);
+//
+//                    for (String propName : hist.getPropertyHistoryMap().keySet()) {
+//                        log.debug("History for prop : " + propName + ": " + hist.getPropertyHistoryMap().get(propName));
+//                    }
+//
+//                    log.info("---------------Creating Copy and Changing Values---------------");
+//                    Candidate c2 = c.createCopy();
+//
+//                    //change something
+//                    c2.setGivenName("Bob");
+//                    c2.setFamilyName("Ross");
+//
+//                    //add a few things
+//                    Phone phone = new Phone();
+//                    phone.setNumber("555-555-5555");
+//                    c2.getPhone().add(phone);
+//                    Email email = new Email();
+//                    email.setAddress("me@example.com");
+//                    email.setLabel(ContactType.personal);
+//                    email.setPreferred(PreferenceType.primary);
+//                    c2.getEmail().add(email);
+//
+//                    //remove something
+//                    c2.getPersonCompetencies().remove(0);
+//
+//                    CandidateHistory hist2 = differ.diffCandidates(c, c2, ValueSource.MANUAL, "abserff");
+//
+//                    for (String propName : hist2.getPropertyHistoryMap().keySet()) {
+//                        log.debug("History for prop : " + propName + ": " + hist2.getPropertyHistoryMap().get(propName));
+//                    }
+//
+//                }
+//            } catch (IOException ex) {
+//                log.error("Error parsing resume [ " + resume.getAbsolutePath() + " ]", ex);
+//            }
+//        }
+ }
 
 }

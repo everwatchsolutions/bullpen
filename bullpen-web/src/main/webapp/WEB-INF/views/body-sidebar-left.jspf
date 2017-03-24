@@ -45,7 +45,12 @@
                          
                             </ul>
                         </li>
-                       
+                     <li <c:if test="${pageName == 'Create App'}">class="nav-active"</c:if>>
+                        <a href="/createapp">
+                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                            <span>Application</span>
+                        </a>
+                    </li>   
                     
                         
                     <li <c:if test="${pageName == 'Equipment'}">class="nav-active"</c:if>>
