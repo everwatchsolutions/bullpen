@@ -26,8 +26,6 @@ import net.acesinc.ats.model.candidate.Candidate;
 import net.acesinc.ats.model.candidate.CandidateHistory;
 import net.acesinc.ats.model.candidate.EducationalOrganization;
 import net.acesinc.ats.model.candidate.Position;
-import net.acesinc.ats.model.candidate.notes.CandidateFileNote;
-import net.acesinc.ats.model.candidate.notes.CandidateMeetingNote;
 import net.acesinc.ats.model.candidate.notes.CandidateNote;
 import net.acesinc.ats.model.candidate.notes.CandidateTextNote;
 import net.acesinc.ats.model.common.Address;
@@ -41,9 +39,7 @@ import net.acesinc.ats.model.common.Phone;
 import net.acesinc.ats.model.common.StoredFile;
 import net.acesinc.ats.model.common.ValueSource;
 import net.acesinc.ats.model.common.Website;
-import net.acesinc.ats.model.opening.Opening;
 import net.acesinc.ats.model.user.User;
-import net.acesinc.ats.model.workflow.Workflow;
 import net.acesinc.ats.web.data.Result;
 import net.acesinc.ats.web.data.UploadFile;
 import net.acesinc.ats.web.data.UploadResponse;
@@ -118,7 +114,7 @@ public class CandidateController {
                 CandidateHistory hist = candidateHistRepo.findByCandidateId(c.getId());
                 model.addAttribute("candidate", c);
                 model.addAttribute("history", hist);
-                model.addAttribute("timeline", getNoteTimeline(c));
+                //model.addAttribute("timeline", getNoteTimeline(c));
                 model.addAttribute("presetNotes", c.getOwnerCompany().getPresetNotes());
 
                 constants.populateModel(u.getCompany(), model);
@@ -148,7 +144,7 @@ public class CandidateController {
                 model.addAttribute("pageName", "Candidate - " + name);
 
                 
-                model.addAttribute("availableNotes", getAllCandidateNoteTypes());
+                //model.addAttribute("availableNotes", getAllCandidateNoteTypes());
             } else {
                 model.addAttribute("error", true);
                 model.addAttribute("errMessage", "Unable to find Candidate");
@@ -159,102 +155,9 @@ public class CandidateController {
         }
     }
 
-    public List<CandidateNote> getAllCandidateNoteTypes() {
-        List<CandidateNote> notes = new ArrayList<>();
 
-        notes.add(new CandidateTextNote());
-        notes.add(new CandidateMeetingNote());
-        notes.add(new CandidateFileNote());
 
-        return notes;
-    }
-
-    public Map<String, Map<String, List<CandidateNote>>> getNoteTimeline(Candidate c) {
-        Map<String, Map<String, List<CandidateNote>>> noteTimeline = new TreeMap<>(new Comparator<String>() {
-            public int compare(String o1, String o2) {
-                Integer one = Integer.parseInt(o1);
-                Integer two = Integer.parseInt(o2);
-                return two.compareTo(one);
-            }
-        });
-
-        if (c.getNotes() != null && !c.getNotes().isEmpty()) {
-            SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
-            SimpleDateFormat monthFormat = new SimpleDateFormat("MMMMM");
-
-            for (CandidateNote note : c.getNotes()) {
-                Date noteTime = note.getDateCreated();
-                if (note instanceof CandidateMeetingNote) {
-                    noteTime = ((CandidateMeetingNote) note).getMeetingDate();
-                }
-                String year = yearFormat.format(noteTime);
-                String month = monthFormat.format(noteTime);
-
-                Map<String, List<CandidateNote>> yearNotes = noteTimeline.get(year);
-                if (yearNotes == null) {
-                    yearNotes = new TreeMap<>(new Comparator<String>() {
-                        public int compare(String o1, String o2) {
-                            Integer one = monthList.indexOf(o1);
-                            Integer two = monthList.indexOf(o2);
-                            return two.compareTo(one);
-                        }
-                    });
-
-                    noteTimeline.put(year, yearNotes);
-                }
-
-                List<CandidateNote> monthNotes = yearNotes.get(month);
-                if (monthNotes == null) {
-                    monthNotes = new ArrayList<>();
-                    yearNotes.put(month, monthNotes);
-                }
-
-                if (note instanceof CandidateFileNote) {
-                    StoredFile file = ((CandidateFileNote) note).getStoredFile();
-                    String boxId = getBoxIdForStoredFile(file.getStorageId());
-                    if (boxId != null) {
-                        BoxSessionResponse boxSession = boxService.createBoxViewerSession(boxId);
-                        if (boxSession != null) {
-                            ((CandidateFileNote) note).setViewUrl(boxSession.getUrls().getView());
-                        }
-                    } else if (file.getFormat() != null) {
-                        switch (file.getFormat()) {
-                            case GIF:
-                            case PNG:
-                            case JPEG:
-                                ((CandidateFileNote) note).setViewUrl("/view/file/" + file.getStorageId());
-                                break;
-                            default:
-                            //Do nothing so there is no View URL on this note
-                        }
-                    }
-                }
-                monthNotes.add(note);
-            }
-
-            for (String year : noteTimeline.keySet()) {
-                for (String month : noteTimeline.get(year).keySet()) {
-                    List<CandidateNote> monthNotes = noteTimeline.get(year).get(month);
-                    Collections.sort(monthNotes, new Comparator<CandidateNote>() {
-                        public int compare(CandidateNote n1, CandidateNote n2) {
-                            Date n1Date = n1.getDateCreated();
-                            if (n1 instanceof CandidateMeetingNote) {
-                                n1Date = ((CandidateMeetingNote) n1).getMeetingDate();
-                            }
-                            Date n2Date = n2.getDateCreated();
-                            if (n2 instanceof CandidateMeetingNote) {
-                                n2Date = ((CandidateMeetingNote) n2).getMeetingDate();
-                            }
-
-                            return n2Date.compareTo(n1Date);
-                        }
-                    });
-                }
-            }
-        }
-
-        return noteTimeline;
-    }
+   
 
     @RequestMapping(value = "/candidate/{id}", method = RequestMethod.GET)
     public String getCandidateById(Principal user, @PathVariable("id") String id, ModelMap model) {
@@ -262,39 +165,7 @@ public class CandidateController {
         return "candidate";
     }
 
-    @RequestMapping(value = "/candidate/archive/{id}", method = RequestMethod.GET)
-    public String archive(Principal user, @PathVariable("id") String id, HttpServletRequest request, ModelMap model, final RedirectAttributes redirectAttributes) {
-
-        User u = userRepo.findByEmail(user.getName());
-        Candidate c = candidateRepo.findByIdAndOwnerCompany(id, u.getCompany());
-        if (c.isArchive()) {
-            c.setArchive(false);
-            log.info("User [ " + u.getEmail() + " ( " + u.getId() + " ) ] unarchived Candidate[ " + id + " ].");
-            candidateHistService.updateCandidateHistory(c, ValueSource.MANUAL, u.getFullName() + " ( " + u.getEmail() + " )");
-            redirectAttributes.addFlashAttribute("success", true);
-            redirectAttributes.addFlashAttribute("message", "Successfully unarchived candidate");
-        } else {
-            c.setArchive(true);
-
-            //remove candidate from workflow
-            if (c.getWorkflow() != null) {
-                Workflow w = c.getWorkflow();
-                c.setWorkflow(null);
-                c.setCurrentState(null);
-                redirectAttributes.addFlashAttribute("success", true);
-                redirectAttributes.addFlashAttribute("message", "Successfully archived candidate and removed from workflow " + w.getName());
-            } else {
-                redirectAttributes.addFlashAttribute("success", true);
-                redirectAttributes.addFlashAttribute("message", "Successfully archived candidate");
-            }
-            log.info("User [ " + u.getEmail() + " ( " + u.getId() + " ) ] archived Candidate[ " + id + " ].");
-            candidateHistService.updateCandidateHistory(c, ValueSource.MANUAL, u.getFullName() + " ( " + u.getEmail() + " )");
-        }
-
-        candidateRepo.save(c);
-        return "redirect:/candidate/" + id;
-
-    }
+    
 
     @RequestMapping(value = "/candidate/startDate", method = RequestMethod.POST)
     public String startDate(Principal user, @RequestParam("id2") String id, @RequestParam("start") String start, HttpServletRequest request, ModelMap model, final RedirectAttributes redirectAttributes) {
@@ -603,41 +474,7 @@ public class CandidateController {
                                 }
                                 break;
                             }
-                            case "notes": {
-                                String title = request.getParameter("note-title");
-                                String text = request.getParameter("note-text");
-                                text = text.replace("\r\n", " ").replace("\n", "");
-                                boolean alreadyUsed = false;
-
-                                List<CandidateNote> list = (List<CandidateNote>) obj;
-                                if (list != null && !list.isEmpty()) {
-                                    for (CandidateNote note : list) {
-                                        if ((note.getRequiredInfoFieldValue("note-title")).equals(title)) {
-                                            alreadyUsed = true;
-                                        }
-                                    }
-                                }
-
-                                if (title.equals("") || text.trim().equals("")) {
-                                    redirectAttributes.addFlashAttribute("error", true);
-                                    redirectAttributes.addFlashAttribute("errMessage", "Cannot edit a note with blank Title or Text");
-                                    edited = false;
-                                } else if (alreadyUsed && !uniqueId.equals(title)) {
-                                    redirectAttributes.addFlashAttribute("error", true);
-                                    redirectAttributes.addFlashAttribute("errMessage", "A note with that title already exists");
-                                    edited = false;
-                                } else {
-                                    for (CandidateNote note : list) {
-                                        if ((note.getRequiredInfoFieldValue("note-title")).equals(uniqueId)) {
-                                            CandidateTextNote n = (CandidateTextNote) note;
-                                            n.setTitle(title);
-                                            n.setText(text);
-                                            edited = true;
-                                        }
-                                    }
-                                }
-                                break;
-                            }
+                            
                             case "personCompetencies": {
                                 break;  //you can't edit skills...
                             }
@@ -725,13 +562,8 @@ public class CandidateController {
                                     break;
                                 }
                             } else if (o instanceof CandidateNote) {
-                                CandidateNote note = (CandidateNote) o;
-                                if (note.getRequiredInfoFieldValue("note-title").equals(uniqueId)) {
-                                    log.info("User [ " + u.getEmail() + " ( " + u.getId() + " ) ] removed old value [ " + note.getRequiredInfoFieldValue("note-title") + " ] from field [ " + f.getName() + " ] from Candidate[ " + id + " ]");
-                                    it.remove();
-                                    edited = true;
-                                    break;
-                                }
+                               
+                               
                             } else {
                                 log.debug("List does not contain IdentifibleObjects.  Can't remove Objects of type [ " + o.getClass() + " ]");
                             }
@@ -1084,139 +916,8 @@ public class CandidateController {
 
                         break;
                     }
-                    case "note-text": {
-                        String title = request.getParameter(CandidateTextNote.titleFieldName);
-                        String text = request.getParameter(CandidateTextNote.textFieldName);
-                        text = text.replace("\r\n", " ").replace("\n", "").replace("\t", "").replace("&nbsp;", "");
-                        boolean alreadyUsed = false;
-
-                        List<CandidateNote> list = (List<CandidateNote>) c.getNotes();
-                        if (list != null && !list.isEmpty()) {
-                            int counter = list.size();
-                            for (CandidateNote n : list) {
-                                if ((n.getRequiredInfoFieldValue("note-title")).equals(title)) {
-                                    title = title + counter;
-                                    // alreadyUsed = true;
-                                }
-                            }
-                        }
-
-                        if (title.trim().equals("") || text.trim().equals("")) {
-                            redirectAttributes.addFlashAttribute("error", true);
-                            redirectAttributes.addFlashAttribute("errMessage", "Cannot create note with blank Title or Text");
-                            edited = false;
-                        } else if (alreadyUsed) {
-                            redirectAttributes.addFlashAttribute("error", true);
-                            redirectAttributes.addFlashAttribute("errMessage", "A note with that title already exists");
-                            edited = false;
-                        } else {
-                            note = new CandidateTextNote();
-                            note.setTitle(title);
-                            ((CandidateTextNote) note).setText(text);
-                            c.addCandidateNote(note);
-
-                            notificationService.nofifyUsersOfCandidateNote(c, note, u);
-                            edited = true;
-                        }
-                        break;
-                    }
-                    case "note-meeting": {
-                        String title = request.getParameter(CandidateNote.titleFieldName);
-                        String date = request.getParameter(CandidateMeetingNote.meetingDateFieldName);
-                        String time = request.getParameter(CandidateMeetingNote.meetingTimeFieldName);
-                        String loc = request.getParameter(CandidateMeetingNote.meetingLocationFieldName);
-                        String desc = request.getParameter(CandidateMeetingNote.meetingDescriptionFieldName);
-                        boolean alreadyUsed = false;
-
-                        List<CandidateNote> list = (List<CandidateNote>) c.getNotes();
-                        if (list != null && !list.isEmpty()) {
-                            for (CandidateNote n : list) {
-                                if ((n.getRequiredInfoFieldValue("note-title")).equals(title)) {
-                                    alreadyUsed = true;
-                                }
-                            }
-                        }
-
-                        log.debug("Creating MeetingNote: what: [ " + title + "], where: [ " + loc + " ], when: [ " + date + " " + time + " ] desc: " + desc);
-                        try {
-                            if (title.trim().equals("") || desc.trim().equals("")) {
-                                redirectAttributes.addFlashAttribute("error", true);
-                                redirectAttributes.addFlashAttribute("errMessage", "Cannot create note with blank Title or Description");
-                                edited = false;
-                            } else if (alreadyUsed) {
-                                redirectAttributes.addFlashAttribute("error", true);
-                                redirectAttributes.addFlashAttribute("errMessage", "A note with that title already exists");
-                                edited = false;
-                            } else {
-                                CandidateMeetingNote meetingNote = new CandidateMeetingNote();
-                                meetingNote.setTitle(title);
-                                meetingNote.setMeetingLocation(loc);
-                                meetingNote.setMeetingDescription(desc);
-
-                                meetingNote.setMeetingDate(inboundDateTimeFormat.parse(date + " " + time));
-
-                                c.addCandidateNote(meetingNote);
-                                note = meetingNote;
-
-                                edited = true;
-                            }
-                            break;
-                        } catch (ParseException ex) {
-                            log.warn("Error parsing Date [ " + date + " " + time + " ]");
-                        }
-                        break;
-                    }
-                    case "note-file": {
-                        if (file != null) {
-                            log.debug("Creating File Note with file [ " + file.getOriginalFilename() + " ]");
-                            UploadResponse upResp = uploadController.handleFileUpload(user, file);
-                            if (upResp != null) {
-                                if (upResp.isError()) {
-                                    log.warn("There was an saving uploaded file [ " + file.getOriginalFilename() + " ]. Status: " + upResp.getTextStatus());
-                                } else {
-                                    UploadFile uf = upResp.getFiles().get(0);
-                                    String title = request.getParameter(CandidateNote.titleFieldName);
-                                    String desc = request.getParameter(CandidateFileNote.fileDescriptionFieldName);
-
-                                    boolean alreadyUsed = false;
-
-                                    List<CandidateNote> list = (List<CandidateNote>) c.getNotes();
-                                    if (list != null && !list.isEmpty()) {
-                                        for (CandidateNote n : list) {
-                                            if ((n.getRequiredInfoFieldValue("note-title")).equals(title)) {
-                                                alreadyUsed = true;
-                                            }
-                                        }
-                                    }
-
-                                    if (title.trim().equals("") || desc.trim().equals("")) {
-                                        redirectAttributes.addFlashAttribute("error", true);
-                                        redirectAttributes.addFlashAttribute("errMessage", "Cannot create note with blank Title or Description");
-                                        edited = false;
-                                    } else if (alreadyUsed) {
-                                        redirectAttributes.addFlashAttribute("error", true);
-                                        redirectAttributes.addFlashAttribute("errMessage", "A note with that title already exists");
-                                        edited = false;
-                                    } else {
-                                        CandidateFileNote fileNote = new CandidateFileNote();
-                                        fileNote.setTitle(title);
-                                        fileNote.setFileDescription(desc);
-
-                                        StoredFile storedFile = getStoredFile(uf);
-                                        fileNote.setStoredFile(storedFile);
-
-                                        c.addCandidateNote(fileNote);
-                                        note = fileNote;
-                                        edited = true;
-                                    }
-                                    break;
-                                }
-                            }
-                        } else {
-                            log.debug("File note sent with no file.");
-                        }
-                        break;
-                    }
+                    
+                    
                     case "eeo": {
 
                         List<String> eeo = new ArrayList();
@@ -1238,7 +939,7 @@ public class CandidateController {
 
                     //send notifications
                     if (note != null) {
-                        notificationService.nofifyUsersOfCandidateNote(c, note, u);
+                       // notificationService.nofifyUsersOfCandidateNote(c, note, u);
                     }
                 }
             } else {

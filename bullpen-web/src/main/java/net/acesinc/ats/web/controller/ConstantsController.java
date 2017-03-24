@@ -23,7 +23,7 @@ import net.acesinc.ats.model.common.EducationLevel;
 import net.acesinc.ats.model.common.NameAndCode;
 import net.acesinc.ats.model.common.Skill;
 import net.acesinc.ats.model.company.Company;
-import net.acesinc.ats.model.opening.Opening;
+
 import net.acesinc.ats.model.user.User;
 import net.acesinc.ats.web.data.Result;
 import net.acesinc.ats.web.data.State;

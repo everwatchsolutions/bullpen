@@ -36,6 +36,7 @@ public class Company {
     private String openingFooter;
     private List<String> departments;
     private Map<String, String> presetNotes;
+    private List<Application> applications = new ArrayList<>();
     
 
     /**
@@ -213,4 +214,14 @@ public class Company {
     public void setPresetNotes(Map<String, String> presetNotes) {
         this.presetNotes = presetNotes;
     }
+
+    public List<Application> getApplications() {
+        return applications;
+    }
+
+    public void setApplications(List<Application> applications) {
+        this.applications = applications;
+    }
+    
+   
 }

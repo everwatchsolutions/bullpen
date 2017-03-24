@@ -7,15 +7,14 @@ package net.acesinc.ats.web.service;
 
 import java.text.SimpleDateFormat;
 import net.acesinc.ats.model.candidate.Candidate;
-import net.acesinc.ats.model.candidate.notes.CandidateFileNote;
-import net.acesinc.ats.model.candidate.notes.CandidateMeetingNote;
+
 import net.acesinc.ats.model.candidate.notes.CandidateNote;
 import net.acesinc.ats.model.candidate.notes.CandidateTextNote;
 import net.acesinc.ats.model.company.Company;
 import net.acesinc.ats.model.company.CompanyInvite;
-import net.acesinc.ats.model.opening.Opening;
+
 import net.acesinc.ats.model.user.User;
-import net.acesinc.ats.model.workflow.WorkflowState;
+
 import net.acesinc.ats.web.data.EmailVerifyRequest;
 import net.acesinc.ats.web.data.PasswordResetRequest;
 import net.acesinc.ats.web.repository.EmailVerifyRequestRepository;
@@ -127,110 +126,9 @@ public abstract class EmailService {
         sendEmail(invite.getEmailInvited(), noReplyEmailAddress, subject, htmlContent);
     }
 
-    @Async
-    public void sendApplicationRecievedEmail(User user, Candidate candidate, Opening opening) {
-        final Context ctx = new Context();
-
-        addDefaultInfoToContext(ctx, user.getCompany(), user);
-
-        ctx.setVariable("candidateName", candidate.getFormattedName());
-        ctx.setVariable("candidateId", candidate.getId());
-        if (candidate.getEmail() != null && !candidate.getEmail().isEmpty()) {
-            ctx.setVariable("candidateEmailHash", candidate.getEmail().get(0).getAddressMD5Hash());
-        }
-
-        ctx.setVariable("openingId", opening.getShortName());
-        ctx.setVariable("openingTitle", opening.getPositionTitle());
-
-        // Create the HTML body using Thymeleaf 
-        final String htmlContent = this.templatingEngine.process("application-received.html", ctx);
-
-        String subject = "Application Recieved for Opening " + opening.getPositionTitle() + "!";
-
-        log.info("Sending Application Received email for [ " + opening.getOwnerCompany().getName() + ":" + opening.getPositionTitle() + " ] to [ " + user.getEmail() + " ]");
-        sendEmail(user.getEmail(), noReplyEmailAddress, subject, htmlContent);
-    }
-
-    @Async
-    public void sendApplicationThankYouEmail(String receipient, Candidate candidate, Opening opening) {
-        final Context ctx = new Context();
-
-        addDefaultInfoToContext(ctx, opening.getOwnerCompany(), null);
-
-        ctx.setVariable("candidateName", candidate.getFormattedName());
-
-        ctx.setVariable("openingId", opening.getShortName());
-        ctx.setVariable("openingTitle", opening.getPositionTitle());
-        ctx.setVariable("companyEmail", opening.getOwnerCompany().getPublicContactEmail());
-        ctx.setVariable("companyWebsite", opening.getOwnerCompany().getWebsiteUrl());
-        ctx.setVariable("companyName", opening.getOwnerCompany().getName());
-
-        log.debug("Creating Application Thank You Email");
-        // Create the HTML body using Thymeleaf 
-        final String htmlContent = this.templatingEngine.process("application-thankyou.html", ctx);
-
-        String subject = "Thank you for applying at " + opening.getOwnerCompany().getName() + "!";
-
-        log.info("Sending Application Received Thank You email for [ " + opening.getOwnerCompany().getName() + ":" + opening.getPositionTitle() + " ] to Candidate [ " + receipient + " ]");
-        sendEmail(receipient, noReplyEmailAddress, subject, htmlContent);
-    }
-
-    @Async
-    public void sendUserCandidateNoteAddedEmail(User u, String subject, Candidate candidate, CandidateNote note, User editor) {
-        final Context ctx = new Context();
-
-        addDefaultInfoToContext(ctx, u.getCompany(), u);
-
-        ctx.setVariable("editorFullName", editor.getFullName());
-        ctx.setVariable("candidateName", candidate.getFormattedName());
-        ctx.setVariable("candidateId", candidate.getId());
-        if (candidate.getEmail() != null && !candidate.getEmail().isEmpty()) {
-            ctx.setVariable("candidateEmailHash", candidate.getEmail().get(0).getAddressMD5Hash());
-        }
-
-        ctx.setVariable("noteType", note.getName());
-        ctx.setVariable("noteName", note.getDisplayName());
-        ctx.setVariable("noteTitle", note.getTitle());
-        if (note instanceof CandidateTextNote) {
-            ctx.setVariable("noteText", ((CandidateTextNote) note).getText());
-        } else if (note instanceof CandidateMeetingNote) {
-            ctx.setVariable("noteMeetingDate", prettyDateFormat.format(((CandidateMeetingNote) note).getMeetingDate()));
-            ctx.setVariable("noteMeetingLocation", ((CandidateMeetingNote) note).getMeetingLocation());
-            ctx.setVariable("noteMeetingDesc", ((CandidateMeetingNote) note).getMeetingDescription());
-        } else if (note instanceof CandidateFileNote) {
-            ctx.setVariable("noteFilename", ((CandidateFileNote) note).getStoredFile().getFilename());
-        }
-
-        // Create the HTML body using Thymeleaf 
-        final String htmlContent = this.templatingEngine.process("candidate-note-added.html", ctx);
-
-        log.info("Sending User [ " + u.getFullName() + " ] notification email with subject [ " + subject + " ]");
-        sendEmail(u.getEmail(), noReplyEmailAddress, subject, htmlContent);
-    }
-
-    @Async
-    public void sendUserCandidateStateTransitionEmail(User u, String subject, Candidate candidate, WorkflowState oldState, WorkflowState newState, User editor) {
-        final Context ctx = new Context();
-
-        addDefaultInfoToContext(ctx, u.getCompany(), u);
-
-        ctx.setVariable("editorFullName", editor.getFullName());
-        ctx.setVariable("candidateName", candidate.getFormattedName());
-        ctx.setVariable("candidateId", candidate.getId());
-        if (candidate.getEmail() != null && !candidate.getEmail().isEmpty()) {
-            ctx.setVariable("candidateEmailHash", candidate.getEmail().get(0).getAddressMD5Hash());
-        }
-
-        ctx.setVariable("oldStateName", oldState.getDisplayName());
-        ctx.setVariable("newStateName", newState.getDisplayName());
-
-        // Create the HTML body using Thymeleaf 
-        final String htmlContent = this.templatingEngine.process("candidate-state-transition.html", ctx);
-
-        log.info("Sending User [ " + u.getFullName() + " ] notification email with subject [ " + subject + " ]");
-        sendEmail(u.getEmail(), noReplyEmailAddress, subject, htmlContent);
-    }
-
+    
+   
+    
     @Async
     public abstract void sendEmail(String toAddress, String fromAddress, String subject, String message);
 }
