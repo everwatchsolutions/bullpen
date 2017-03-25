@@ -108,8 +108,7 @@ public class CompanyController {
         if (u != null) {
             Company c = u.getCompany();
             c.setName(companyName);
-            c.setOpeningFooter(companyOpeningFooter);
-            c.setOpeningListFooter(companyListFooter);
+
 
             //see if they are trying to change their shortname
             if (shortName != null && !shortName.isEmpty() && !c.getShortName().equals(shortName)) {

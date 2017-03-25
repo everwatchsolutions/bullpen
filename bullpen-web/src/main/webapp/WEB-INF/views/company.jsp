@@ -55,25 +55,7 @@
                 </c:forEach>
             </div>
         </section>
-                            
-        <section class="panel">
-            <div class="panel-heading">
-                <span class="panel-title">Departments</span>
-                <div class="panel-heading-right">
-                    <a href="#remove-department-modal" class="modal-with-form btn btn-sm btn-success btn-danger"><i class="fa fa-minus"></i></a>
-                    <a href="#add-department-modal" class="modal-with-form btn btn-sm btn-success"><i class="fa fa-plus"></i></a>
-                </div>
 
-            </div>
-            <div class="panel-body">
-                <select name="departments" data-plugin-selectTwo class="col-sm-9">
-                    <c:forEach var="dept" items="${company.getDepartments()}">
-                        <option value="${dept}" >${dept}</option>
-                    </c:forEach>
-                </select>
-                <a href="#" onclick="showDepartmentEditPanel('departments', 'department');" class="btn btn-primary col-sm-3"><i class="fa fa-edit"></i> Edit</a>
-            </div>
-        </section>
                             
         <section class="panel">
             <div class="panel-heading">
@@ -159,25 +141,6 @@
             </div>
         </section>
 
-        <section class="panel">
-            <div class="panel-heading">
-                <span class="panel-title">Preset Notes</span>
-                <div class="panel-heading-right">
-                    <a href="#remove-preset-note-modal" class="modal-with-form btn btn-sm btn-success btn-danger"><i class="fa fa-minus"></i></a>
-                    <a href="#add-preset-notes-modal" class="modal-with-form btn btn-sm btn-success"><i class="fa fa-plus"></i></a>
-                </div>
-
-            </div>
-            <div class="panel-body">
-                <select name="PresetNotes" id="noteSelector"data-plugin-selectTwo class="col-sm-9">
-                    <c:forEach var="title" items="${presetNotes.keySet()}">
-                        <option value="${presetNotes.get(title)}" >${title}</option>
-                    </c:forEach>
-                </select>
-                <a href="#" onclick="showPresetNoteEditPanel('PresetNotes', 'preset-note');" class="btn btn-primary col-sm-3"><i class="fa fa-edit"></i> Edit</a>
-            </div>
-        </section>
-        
     </div>
     <div class="col-md-8 col-lg-8">
         <form action="/company/profile" method="post">
@@ -313,14 +276,7 @@
                                         <h2 class="panel-title">Company Information</h2>
                                     </div>
                                     <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-sm-12 mb-lg">
-                                                <label>Company Short URL</label>
-                                                <div class="input-group input-group-icon">
-                                                    <input <c:if test = "${user.getAuthority() != needed && user.getAuthority() != needed2}"> disabled </c:if> name="shortName" type="text" class="form-control " placeholder="ex: mybusiness or my-business"  value="${company.shortName}"/>
-                                                    </div>
-                                                </div>
-                                            </div>
+                               
                                             <div class="row">
                                                 <div class="col-sm-12 mb-lg">
                                                     <label>Company Website</label>
@@ -424,18 +380,6 @@
     <%@include file="templates/company/edit-category.jspf" %>
     </div>
 </script>
-<%@include file="templates/company/add-department.jspf" %>
-<script id="edit-department-template" type="text/x-handlebars-template">
-    <div class="zoom-anim-dialog modal-block modal-block-primary">
-    <%@include file="templates/company/edit-department.jspf" %>
-    </div>
-</script>
-<%@include file="templates/company/add-preset-note.jspf" %>
-<script id="edit-preset-note-template" type="text/x-handlebars-template">
-    <div class="zoom-anim-dialog modal-block modal-block-primary">
-    <%@include file="templates/company/edit-preset-note.jspf" %>
-    </div>
-</script>
 <%@include file="templates/company/add-skill.jspf" %>
 <script id="edit-skill-template" type="text/x-handlebars-template">
     <div class="zoom-anim-dialog modal-block modal-block-primary">
@@ -450,14 +394,12 @@
 </script>
 
 <%@include file="templates/company/remove-user.jspf" %>
-<%@include file="templates/company/add-user-notify.jspf" %>
-<%@include file="templates/company/remove-user-notify.jspf" %>
 <%@include file="templates/company/edit-user.jspf" %>
 <%@include file="templates/company/remove-department.jspf" %>
 <%@include file="templates/company/remove-certification.jspf" %>
 <%@include file="templates/company/remove-skill.jspf" %>
 <%@include file="templates/company/remove-location.jspf" %>
-<%@include file="templates/company/remove-preset-note.jspf" %>
+
 <!-- end: page -->
 
 <%@include file="content-end-to-script-start.jspf" %>
