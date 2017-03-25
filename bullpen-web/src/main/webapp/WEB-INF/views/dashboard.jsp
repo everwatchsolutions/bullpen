@@ -12,13 +12,30 @@
 <link rel="stylesheet" href="/assets/vendor/morris/morris.css" />
 <link rel="stylesheet" href="/assets/vendor/pnotify/pnotify.custom.css" />
 <link rel="stylesheet" href="/assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
-
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <%@include file="header-end-to-content-start.jspf" %>
 
 <!-- start: page -->
+  <div class="row">
+<c:forEach var="item" items="${apps}" varStatus="appItem">
 
 
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <img src="/assets/images/image-not-found.png" alt="...">
+      <div class="caption">
+        <h3>${item.name}</h3>
+        <p>${item.description}</p>
+        <p><a href="${item.url.address}" class="btn btn-primary" role="button">Launch!</a>
+        <a href="#" onclick="alert('this feature is not implemted');" class="btn btn-default" role="button">More Info</a></p>
+      </div>
+    </div>
+  </div>
+ 
+</c:forEach>
+</div>
 
 
      <!-- end: page -->
@@ -46,7 +63,7 @@
                     <script src="assets/vendor/snap-svg/snap.svg.js"></script>
                     <script src="assets/vendor/liquid-meter/liquid.meter.js"></script>
 
-                    <script src="/assets/javascripts/dashboard.js"></script>
+                  
                     <script src="/assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
                     <script src="/assets/vendor/jquery-datatables-bs3/assets/js/datatables.js"></script>
 
@@ -65,12 +82,6 @@
 
 
                     <%@include file="body-scripts-end.jspf" %>
-
-                    <!-- Examples -->
-                    <!--<script src="assets/javascripts/dashboard/examples.dashboard.js"></script>-->
-                    <script src="assets/javascripts/dashboard/line_graph.js"></script>
-                    <script src="assets/javascripts/dashboard/dashboard.piechart.js"></script>
-
                     <%@include file="body-end.jspf" %>       
 
 
