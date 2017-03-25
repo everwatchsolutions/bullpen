@@ -12,7 +12,7 @@
                 <li><span>${pageName}</span></li>
             </ol>
 
-            <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-calendar-o"></i></a>
+            <!--<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-calendar-o"></i></a> --->
         </div>
     </header>
     <%@include file="message-alert.jspf" %>
