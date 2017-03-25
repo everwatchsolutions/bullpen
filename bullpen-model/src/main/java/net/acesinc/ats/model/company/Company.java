@@ -8,7 +8,6 @@ package net.acesinc.ats.model.company;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import net.acesinc.ats.model.common.Address;
 import net.acesinc.ats.model.common.StoredFile;
 import net.acesinc.ats.model.user.User;
@@ -32,10 +31,6 @@ public class Company {
     private String websiteUrl;
     private String publicContactEmail;
 
-    private String openingListFooter;
-    private String openingFooter;
-    private List<String> departments;
-    private Map<String, String> presetNotes;
     private List<Application> applications = new ArrayList<>();
     
 
@@ -178,43 +173,6 @@ public class Company {
     public void setPublicContactEmail(String publicContactEmail) {
         this.publicContactEmail = publicContactEmail;
     }
-
-    @JsonIgnore
-    public String getOpeningListFooter() {
-        return openingListFooter;
-    }
-
-    @JsonIgnore
-    public void setOpeningListFooter(String openingListFooter) {
-        this.openingListFooter = openingListFooter;
-    }
-
-    @JsonIgnore
-    public String getOpeningFooter() {
-        return openingFooter;
-    }
-
-    @JsonIgnore
-    public void setOpeningFooter(String openingFooter) {
-        this.openingFooter = openingFooter;
-    }
-    
-    public List<String> getDepartments() {
-        return departments;
-    }
-    
-    public void setDepartments(List<String> departments) {
-        this.departments = departments;
-    }
-    
-    public Map<String, String> getPresetNotes() {
-        return presetNotes;
-    }
-    
-    public void setPresetNotes(Map<String, String> presetNotes) {
-        this.presetNotes = presetNotes;
-    }
-
     public List<Application> getApplications() {
         return applications;
     }
