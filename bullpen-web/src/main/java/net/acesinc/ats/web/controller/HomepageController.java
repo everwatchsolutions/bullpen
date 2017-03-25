@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package net.acesinc.ats.web.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -19,11 +20,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class HomepageController {
+
     private static final Logger log = LoggerFactory.getLogger(HomepageController.class);
+    private final SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
+    
     
     @RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
     public String getHomepage(ModelMap model) {
-        model.addAttribute("pageName", "Home");
-        return "index";
+        model.addAttribute("pageName", "Login");
+        model.addAttribute("currentYear", yearFormat.format(new Date()));
+        return "login";
     }
 }
