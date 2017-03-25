@@ -23,7 +23,6 @@ import net.acesinc.ats.model.common.EducationLevel;
 import net.acesinc.ats.model.common.NameAndCode;
 import net.acesinc.ats.model.common.Skill;
 import net.acesinc.ats.model.company.Company;
-
 import net.acesinc.ats.model.user.User;
 import net.acesinc.ats.web.data.Result;
 import net.acesinc.ats.web.data.State;
@@ -102,7 +101,6 @@ public class ConstantsController {
 
         model.addAttribute("categories", getAllCategories(company).getData());
         model.addAttribute("states", getStateList());
-        model.addAttribute("presetNotes", company.getPresetNotes());
         model.addAttribute("educationLevels", EducationLevel.values());
         
 
@@ -318,128 +316,8 @@ public class ConstantsController {
         return c;
     }
 
-    @RequestMapping(value = "/department", method = RequestMethod.POST, produces = {"application/xml", "application/json"})
-    public @ResponseBody
-    ResponseEntity createDepartment(Principal user, @RequestParam(value = "department") String departmentName, @RequestParam(value = "origLabel", required = false) String origLabel, HttpServletRequest request, ModelMap model, final RedirectAttributes redirectAttributes) {
-        User u = userRepo.findByEmail(user.getName());
-        if (u != null) {
-            if (departmentName != null && !departmentName.equals("")) {
-                Company c = u.getCompany();
-
-                if (origLabel == null) {
-                    // a name isn't being edited, use departmentName
-                    if (c.getDepartments() != null) {
-                        if (!c.getDepartments().contains(departmentName)) {
-                            c.getDepartments().add(departmentName);
-                            companyRepo.save(c);
-                            redirectAttributes.addFlashAttribute("errMessage", "Successfully edited department");
-                            return new ResponseEntity<>(HttpStatus.ACCEPTED);
-                        } else {
-                            redirectAttributes.addFlashAttribute("errMessage", "Department already exists");
-                            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-                        }
-
-                    } else {
-                        List<String> temp = new ArrayList<String>();
-                        temp.add(departmentName);
-                        c.setDepartments(temp);
-                        companyRepo.save(c);
-                        redirectAttributes.addFlashAttribute("errMessage", "Successfully edited department");
-                        return new ResponseEntity<>(HttpStatus.ACCEPTED);
-                    }
-                } else // a department name is being edited so remove origLabel
-                 if (c.getDepartments() != null) {
-                        if (!c.getDepartments().contains(departmentName)) {
-                            c.getDepartments().remove(origLabel);
-                            c.getDepartments().add(departmentName);
-                            companyRepo.save(c);
-                            redirectAttributes.addFlashAttribute("errMessage", "Successfully edited department");
-                            return new ResponseEntity<>(HttpStatus.ACCEPTED);
-                        } else {
-                            redirectAttributes.addFlashAttribute("errMessage", "Department already exists");
-                            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-                        }
-                    } else {
-                        List<String> temp = new ArrayList<String>();
-                        temp.add(departmentName);
-                        c.setDepartments(temp);
-                        companyRepo.save(c);
-                        redirectAttributes.addFlashAttribute("errMessage", "Successfully edited department");
-                        return new ResponseEntity<>(HttpStatus.ACCEPTED);
-                    }
-            } else {
-                redirectAttributes.addFlashAttribute("errMessage", "Department name not valid");
-                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-            }
-        } else {
-            redirectAttributes.addFlashAttribute("errMessage", "Error editing department");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @RequestMapping(value = "/presetNote", method = RequestMethod.POST, produces = {"application/xml", "application/json"})
-    public @ResponseBody
-    Result createPresetNote(Principal user, @RequestParam(value = "note-title") String noteTitle, @RequestParam(value = "note-text") String noteText, @RequestParam(value = "origLabel", required = false) String origLabel, HttpServletRequest request, ModelMap model, final RedirectAttributes redirectAttributes) {
-        User u = userRepo.findByEmail(user.getName());
-        if (u != null) {
-            if (noteTitle != null && !noteTitle.equals("") && noteText != null && !noteText.equals("")) {
-                Company c = u.getCompany();
-
-                if (origLabel == null) {
-                    // note isn't being edited, use noteTitle and noteText
-                    if (c.getPresetNotes() != null) {
-                        c.getPresetNotes().put(noteTitle, noteText);
-                    } else {
-                        Map<String, String> temp = new HashMap<String, String>();
-                        temp.put(noteTitle, noteText);
-                        c.setPresetNotes(temp);
-                    }
-                } else // a note title or text is being edited so remove origLabel
-                 if (c.getPresetNotes() != null) {
-                        c.getPresetNotes().remove(origLabel);
-                        c.getPresetNotes().put(noteTitle, noteText);
-                    } else {
-                        Map<String, String> temp = new HashMap<String, String>();
-                        temp.put(noteTitle, noteText);
-                        c.setPresetNotes(temp);
-                    }
-                companyRepo.save(c);
-                return Result.ok(c);
-            } else {
-                redirectAttributes.addFlashAttribute("error", true);
-                redirectAttributes.addFlashAttribute("errMessage", "Please provide Title and Text for the note");
-                return Result.error(null, "Blank text or title");
-            }
-        } else {
-            return Result.error(null, "Unknown User");
-        }
-    }
-
-    @RequestMapping(value = "/remove-preset-note", method = RequestMethod.POST, produces = {"application/xml", "application/json"})
-    public @ResponseBody
-    ResponseEntity removePresetNote(Principal user, @RequestParam("presetNote") String noteToRemove, final RedirectAttributes redirectAttributes) {
-
-        User x = userRepo.findByEmail(user.getName());
-        Company c = x.getCompany();
-
-        if (c != null && c.getPresetNotes() != null) {
-            if (noteToRemove != null) {
-                c.getPresetNotes().remove(noteToRemove);
-                companyRepo.save(c);
-                redirectAttributes.addFlashAttribute("errMessage", "Successfully removed the department");
-                return new ResponseEntity<>(HttpStatus.FOUND);
-            } else {
-                redirectAttributes.addFlashAttribute("errMessage", "Error accessing company info");
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-        } else {
-            redirectAttributes.addFlashAttribute("errMessage", "Error accessing company info");
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        //return Result.error(null, "Unknown User");
-        //return null;
-    }
+   
+   
 
     @RequestMapping(value = "/category", method = RequestMethod.POST, produces = {"application/xml", "application/json"})
     public @ResponseBody
@@ -521,31 +399,6 @@ public class ConstantsController {
         //return null;
     }
 
-//method to remove user for company
-    @RequestMapping(value = "/remove-department", method = RequestMethod.POST, produces = {"application/xml", "application/json"})
-    public @ResponseBody
-    ResponseEntity removeDepartment(Principal user, @RequestParam("department") String departmentToRemove, final RedirectAttributes redirectAttributes) {
-
-        User x = userRepo.findByEmail(user.getName());
-        Company c = x.getCompany();
-
-        if (c != null && c.getDepartments() != null) {
-            for (int i = 0; i < c.getDepartments().size(); i++) {
-                if (c.getDepartments().get(i).equals(departmentToRemove)) {
-                    c.getDepartments().remove(i);
-                    companyRepo.save(c);
-                }
-            }
-            redirectAttributes.addFlashAttribute("errMessage", "Successfully removed the department");
-            return new ResponseEntity<>(HttpStatus.FOUND);
-        } else {
-            redirectAttributes.addFlashAttribute("errMessage", "Error accessing company info");
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        //return Result.error(null, "Unknown User");
-        //return null;
-    }
 
     public Category createCategory(String name, String label, Company company) {
         return createCategory(name, label, label, company);

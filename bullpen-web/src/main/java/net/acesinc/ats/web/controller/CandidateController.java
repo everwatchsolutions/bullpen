@@ -14,20 +14,15 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
 import net.acesinc.ats.model.candidate.Candidate;
 import net.acesinc.ats.model.candidate.CandidateHistory;
 import net.acesinc.ats.model.candidate.EducationalOrganization;
 import net.acesinc.ats.model.candidate.Position;
 import net.acesinc.ats.model.candidate.notes.CandidateNote;
-import net.acesinc.ats.model.candidate.notes.CandidateTextNote;
 import net.acesinc.ats.model.common.Address;
 import net.acesinc.ats.model.common.Certification;
 import net.acesinc.ats.model.common.Competency;
@@ -42,7 +37,6 @@ import net.acesinc.ats.model.common.Website;
 import net.acesinc.ats.model.user.User;
 import net.acesinc.ats.web.data.Result;
 import net.acesinc.ats.web.data.UploadFile;
-import net.acesinc.ats.web.data.UploadResponse;
 import net.acesinc.ats.web.repository.CandidateHistoryRepository;
 import net.acesinc.ats.web.repository.CandidateRepository;
 import net.acesinc.ats.web.repository.UserRepository;
@@ -114,8 +108,7 @@ public class CandidateController {
                 CandidateHistory hist = candidateHistRepo.findByCandidateId(c.getId());
                 model.addAttribute("candidate", c);
                 model.addAttribute("history", hist);
-                //model.addAttribute("timeline", getNoteTimeline(c));
-                model.addAttribute("presetNotes", c.getOwnerCompany().getPresetNotes());
+
 
                 constants.populateModel(u.getCompany(), model);
 
