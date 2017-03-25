@@ -15,7 +15,6 @@ import net.acesinc.ats.web.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,11 +47,6 @@ public class DashboardController {
         model.addAttribute("companies", companyRepo.findAll());
         model.addAttribute("apps", c.getApplications());
         
-        if(c.getApplications() != null){
-        for(Application a: c.getApplications())
-        {
-            System.out.print(a.getUrl());
-        }}
 
         return "dashboard";
     }

@@ -49,8 +49,6 @@ public class AppController {
     public String createApp(Principal user, ModelMap model, @RequestParam("name") String name,
             @RequestParam("description") String description,@RequestParam("url") String url) {
         model.addAttribute("pageName", "Dashboard");
-       System.out.println("creating app..");
-       System.out.println(name + " "  + description + " " +url);
        
         User u = userRepo.findByEmail(user.getName());
         Company c = u.getCompany();
