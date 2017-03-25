@@ -395,7 +395,6 @@
 
 <%@include file="templates/company/remove-user.jspf" %>
 <%@include file="templates/company/edit-user.jspf" %>
-<%@include file="templates/company/remove-department.jspf" %>
 <%@include file="templates/company/remove-certification.jspf" %>
 <%@include file="templates/company/remove-skill.jspf" %>
 <%@include file="templates/company/remove-location.jspf" %>
