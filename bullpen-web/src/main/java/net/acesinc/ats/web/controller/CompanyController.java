@@ -102,7 +102,7 @@ public class CompanyController {
     @RequestMapping(value = "/company/profile", method = RequestMethod.POST)
     public String updateCompanyProfile(Principal user, ModelMap model, HttpServletRequest req,
             @RequestParam("companyName") String companyName, @RequestParam("companyAddress") String companyAddress, @RequestParam("companyCity") String companyCity, @RequestParam("companyState") String companyState, @RequestParam("companyZipcode") String companyZipcode,
-            @RequestParam("companyOpeningFooter") String companyOpeningFooter, @RequestParam("companyListFooter") String companyListFooter, @RequestParam("companyDescription") String companyDescription, @RequestParam(value = "shortName", required = false) String shortName, @RequestParam("companyWebsite") String companyWebsite, @RequestParam("companyEmail") String companyEmail) {
+             @RequestParam("companyDescription") String companyDescription,  @RequestParam("companyWebsite") String companyWebsite, @RequestParam("companyEmail") String companyEmail) {
         model.addAttribute("pageName", "Company Profile");
         User u = userRepo.findByEmail(user.getName());
         if (u != null) {
@@ -110,28 +110,6 @@ public class CompanyController {
             c.setName(companyName);
 
 
-            //see if they are trying to change their shortname
-            if (shortName != null && !shortName.isEmpty() && !c.getShortName().equals(shortName)) {
-                try {
-                    String encodedShortName = URLEncoder.encode(shortName, "UTF-8");
-                    Company test = companyRepo.findByShortName(encodedShortName);
-                    if (test == null) {
-                        c.setShortName(encodedShortName);
-                    } else {
-                        //short name already in use by another company
-                        model.addAttribute("error", true);
-                        model.addAttribute("errMessage", "Sorry. The Short Name " + shortName + " is already in use.  Please choose another one.");
-                        populateCompanyProfileModel(u, model);
-                        return "company";
-                    }
-                } catch (UnsupportedEncodingException e) {
-                    //really this should never happen because UTF-8 is a valid encoding...
-                    model.addAttribute("error", true);
-                    model.addAttribute("errMessage", "Sorry. An error occured checking the Short Name " + shortName + ".  Please choose another one.");
-                    populateCompanyProfileModel(u, model);
-                    return "company";
-                }
-            }
             
             Address primaryAddr = c.getPrimaryAddress();
             primaryAddr.setLocationName(companyName);
