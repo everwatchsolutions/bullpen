@@ -24,46 +24,71 @@
 
 <div class="col-lg-12">
     <div class="spacer"></div>
+
     <section class="panel panel-transparent">
-        <div class="panel-body">
-            <div class="form-group mb-lg panel">
-                <div class="panel-heading" align="center">
-                    <h2 class="panel-title">Add Application</h2>
-                </div>
-                <div class="panel-body">
-                    <form action="/createapplication" method="POST">
+        <form action="/createapplication" method="POST">
+            <div class="panel-body">
+                <div class="form-group mb-lg panel">
+                    <div class="panel-heading" align="center">
+                        <h2 class="panel-title">Add Application</h2>
+                    </div>
+                    <div class="panel-body">
+
                         <div class="form-group row col-lg-10">
                             <label for="name" class="col-2 col-form-label">Application Name</label>
-                              <input class="form-control" type="text"  id="name" name="name">
-                            </div> <br>
+                            <input class="form-control" type="text"  id="name" name="name">
+                        </div> <br>
 
                         <div class="form-group row col-lg-10">
                             <label for="example-url-input" class="col-2 col-form-label">URL</label>
-                             <input class="form-control" type="url" placeholder="https://bullpen.com" name="url" id="url">
+                            <input class="form-control" type="url" placeholder="https://bullpen.com" name="url" id="url">
                         </div><br>
 
                         <div class="form-group col-lg-10" style="padding-left:inherit;padding-right: 25px;">
                             <label for="description">Description</label>
                             <textarea class="form-control" id="description" name="description" rows="3"></textarea>
                         </div><br>
+                        
+                        <div class="form-group row col-lg-10">
+                        <h2>Point of Contact Information</h2> <a href="#" onclick="addPOC();" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                        <p>Click the plus to add more than one point of contact.</p> </div>
+                        <div class="form-group row col-lg-10">
+                            <label for="name" class="col-2 col-form-label">POC Name</label>
+                            <input class="form-control" type="text"  id="name" name="name">
+                        </div> <br>
+
+                        <div class="form-group row col-lg-10">
+                            <label for="example-url-input" class="col-2 col-form-label">POC Email</label>
+                            <input class="form-control" type="email"  name="email" id="email">
+                        </div><br>
+                        
+                        <div class="form-group row col-lg-10">
+                            <label for="phone" class="col-2 col-form-label">POC Phone Number</label>
+                            <input class="form-control" type="phone"  id="phone" name="phone">
+                        </div>
+                        <br>
 
                         <div class="form-group mb-lg col-lg-12">
-                          
+
                             <div class="input-group input-group-icon">
                                 <div class="pull-right">
                                     <button type="submit" class="btn btn-success">Create Application!</button>
                                 </div>
                             </div>
                         </div>
-                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
-                    </form>
+
+                    </div>
                 </div>
             </div>
-        </div>
+                        
+                        
+            </div>
+        </form>
+    </section>
 </div>
-</section>
-</div>
+
 <!-- end: page -->
 
 <%@include file="content-end-to-script-start.jspf" %>
@@ -79,26 +104,26 @@
 
 
 <script type="text/javascript">
-        $(document).ready(function () {
-            var copyOfUpload = $('#fileupload');
-            $('<input>').attr({
-                type: 'hidden',
-                id: 'fileSize',
-                name: 'fileSize',
-                value: "0"
-            }).appendTo('form');
-            $('#fileupload').on('change', function () {
-                var filename = $('#fileupload').val().split('\\').pop();
-                $('#resumeButton').text('Selected Resume: ' + filename);
-                var size = this.files[0].size / 1024 / 1024;
+    $(document).ready(function () {
+        var copyOfUpload = $('#fileupload');
+        $('<input>').attr({
+            type: 'hidden',
+            id: 'fileSize',
+            name: 'fileSize',
+            value: "0"
+        }).appendTo('form');
+        $('#fileupload').on('change', function () {
+            var filename = $('#fileupload').val().split('\\').pop();
+            $('#resumeButton').text('Selected Resume: ' + filename);
+            var size = this.files[0].size / 1024 / 1024;
 
-                if (size > 1.9)
-                {
-                    $("#fileupload").val('');
-                }
-                $('#fileSize').val(size);
-
-            });
+            if (size > 1.9)
+            {
+                $("#fileupload").val('');
+            }
+            $('#fileSize').val(size);
 
         });
-    </script>
+
+    });
+</script>
