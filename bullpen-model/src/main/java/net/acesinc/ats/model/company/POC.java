@@ -23,6 +23,10 @@ public class POC {
         this.title = title;
     }
 
+    public POC() {
+        
+    }
+
     public String getName() {
         return name;
     }

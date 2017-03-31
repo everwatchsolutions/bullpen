@@ -1,0 +1,28 @@
+<div id="more-info-modal${item.name}" class="zoom-anim-dialog modal-block modal-block-primary mfp-hide">
+    <section class="panel">
+            <header class="panel-heading">
+                <h2 class="panel-title">More Info for ${item.name}</h2>
+            </header>
+            <div class="panel-body">
+                <div class="form-group mt-lg">
+                    <label class="col-sm-12 control-label">Name: ${item.POCs[0].name}</label><br>
+
+                    <label class="col-sm-12 control-label">Email: <a href="mailto:${item.POCs[0].email}">${item.POCs[0].email}</a></label><br>
+
+                    <label class="col-sm-12 control-label">Phone: <a href="tel:${item.POCs[0].phone}">${item.POCs[0].phone}</a></label><br>
+
+                </div>
+
+
+            </div>
+            <footer class="panel-footer">
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <button type="cancel" class="btn btn-default modal-dismiss">Close</button>
+                    </div>
+                </div>
+            </footer>
+
+    </section>
+</div>

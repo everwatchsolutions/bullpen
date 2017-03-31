@@ -6,10 +6,12 @@
 package net.acesinc.ats.web.controller;
 
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.List;
 import net.acesinc.ats.model.common.Website;
 import net.acesinc.ats.model.company.Application;
 import net.acesinc.ats.model.company.Company;
+import net.acesinc.ats.model.company.POC;
 import net.acesinc.ats.model.user.User;
 import net.acesinc.ats.web.repository.CompanyRepository;
 import net.acesinc.ats.web.repository.UserRepository;
@@ -47,18 +49,32 @@ public class AppController {
     
     @RequestMapping(value = {"/createapplication"}, method = RequestMethod.POST)
     public String createApp(Principal user, ModelMap model, @RequestParam("name") String name,
-            @RequestParam("description") String description,@RequestParam("url") String url) {
+            @RequestParam("description") String description,@RequestParam("url") String url,
+            @RequestParam("poc[][name]") String[] names, @RequestParam("poc[][email]") String[] emails,
+        @RequestParam("poc[][phone]") String[] phones) {
         model.addAttribute("pageName", "Dashboard");
+        
+         System.out.println(Arrays.toString(emails));
+         System.out.println(Arrays.toString(names));
+         System.out.println(Arrays.toString(phones));
        
         User u = userRepo.findByEmail(user.getName());
         Company c = u.getCompany();
 
         Application a = new Application(name,description);
-        //POC p = new POC();
+        //change to loop later to make for multiple POCs
+        POC p = new POC();
+        p.setEmail(emails[0]);
+        p.setName(names[0]);
+        p.setPhone(phones[0]);
+        List<POC> pocs = a.getPOCs();
+        pocs.add(p);
+        a.setPOCs(pocs);
         
         Website w = new Website();
         w.setAddress(url);
         a.setUrl(w);
+
         List<Application> apps = c.getApplications();
         apps.add(a);
         c.setApplications(apps);

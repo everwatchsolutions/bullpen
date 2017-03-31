@@ -6,6 +6,7 @@
 package net.acesinc.ats.model.company;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import net.acesinc.ats.model.common.StoredFile;
 import net.acesinc.ats.model.common.Website;
@@ -20,7 +21,7 @@ public class Application {
     private Website url;
     private String description;
     private StoredFile screenshot;
-    private List<POC> POCs;
+    private List<POC> POCs = new ArrayList();
 
     public Application(String name, String description) {
         this.name = name;
