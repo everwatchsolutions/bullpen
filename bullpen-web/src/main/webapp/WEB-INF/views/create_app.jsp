@@ -27,44 +27,44 @@
 
     <section class="panel panel-transparent">
         <form action="/createapplication" method="POST">
-            <div class="panel-body">
+            <div>
                 <div class="form-group mb-lg panel">
                     <div class="panel-heading" align="center">
                         <h2 class="panel-title">Add Application</h2>
                     </div>
                     <div class="panel-body">
 
-                        <div class="form-group row col-lg-10">
+                        <div class="form-group row col-lg-10" style="padding-left: 30px;">
                             <label for="name" class="col-2 col-form-label">Application Name</label>
                             <input class="form-control" type="text"  id="name" name="name">
                         </div> <br>
 
-                        <div class="form-group row col-lg-10">
+                        <div class="form-group row col-lg-10" style="padding-left: 30px;">
                             <label for="example-url-input" class="col-2 col-form-label">URL</label>
                             <input class="form-control" type="url" placeholder="https://bullpen.com" name="url" id="url">
                         </div><br>
 
-                        <div class="form-group col-lg-10" style="padding-left:inherit;padding-right: 25px;">
+                        <div class="form-group col-lg-10" style="padding-right: 25px;">
                             <label for="description">Description</label>
                             <textarea class="form-control" id="description" name="description" rows="3"></textarea>
                         </div><br>
                         
-                        <div class="form-group row col-lg-10">
-                        <h2>Point of Contact Information</h2> <a href="#" onclick="addPOC();" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                        <div class="form-group row col-lg-10" style="padding-left: 30px;">
+                        <h2>Point of Contact Information</h2> <a href="#" onclick="alert('feature not finished')" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i></a>
                         <p>Click the plus to add more than one point of contact.</p> </div>
-                        <div class="form-group row col-lg-10">
+                        <div class="form-group row col-lg-10" style="padding-left: 30px;">
                             <label for="name" class="col-2 col-form-label">POC Name</label>
-                            <input class="form-control" type="text"  id="name" name="name">
+                            <input class="form-control" type="text"  id="name" name="poc[][name]">
                         </div> <br>
 
-                        <div class="form-group row col-lg-10">
+                        <div class="form-group row col-lg-10" style="padding-left: 30px;">
                             <label for="example-url-input" class="col-2 col-form-label">POC Email</label>
-                            <input class="form-control" type="email"  name="email" id="email">
+                            <input class="form-control" type="email"  name="poc[][email]" id="email">
                         </div><br>
                         
-                        <div class="form-group row col-lg-10">
+                        <div class="form-group row col-lg-10" style="padding-left: 30px;">
                             <label for="phone" class="col-2 col-form-label">POC Phone Number</label>
-                            <input class="form-control" type="phone"  id="phone" name="phone">
+                            <input class="form-control" type="phone"  id="phone" name="poc[][phone]">
                         </div>
                         <br>
 
