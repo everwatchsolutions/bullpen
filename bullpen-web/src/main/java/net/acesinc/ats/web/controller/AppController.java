@@ -83,9 +83,23 @@ public class AppController {
        
         return "redirect:/dashboard";
     }
-    
-    
 
-   
+    @RequestMapping(value = {"/deleteapplication"}, method = RequestMethod.POST)
+    public String deleteApp(Principal user, ModelMap model, @RequestParam("name") String name,
+                            @RequestParam("description") String description) {
+
+        Company c = userRepo.findByEmail(user.getName()).getCompany();
+        List<Application> applications = c.getApplications();
+        Application appForDeletion = applications.get(applications.indexOf(new Application(name, description)));
+
+        if (appForDeletion != null) {
+                applications.remove(appForDeletion);
+        }
+
+        c.setApplications(applications);
+        companyRepo.save(c);
+
+        return "redirect:/dashboard";
+    }
 
 }
