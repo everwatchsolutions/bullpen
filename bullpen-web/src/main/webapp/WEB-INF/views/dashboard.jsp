@@ -20,16 +20,15 @@
 <!-- start: page -->
 <div class="row">
     <c:forEach var="item" items="${apps}" varStatus="appItem">
-
-
-        <div class="col-sm-6 col-md-4">
+        <div class="col-sm-6 col-md-4" align="center">
             <div class="thumbnail">
+                <div class="panel-heading"><h4>${item.name}</h4>
+                </div>
                 <img src="/assets/images/image-not-found.png" alt="...">
                 <div class="caption">
-                    <h3>${item.name}</h3>
                     <p>${item.description}</p>
-                    <p><a href="${item.url.address}" class="btn btn-primary" role="button">Launch!</a>
-                        <a href="#more-info-modal${item.name}"  class="modal-with-form btn btn-default" role="button">More Info</a></p>
+                    <p><a href="${item.url.address}" class="btn btn-sm btn-primary" role="button">Launch!</a>
+                        <a href="#more-info-modal${item.name}"  class="modal-with-form btn btn-sm btn-default" role="button">More Info</a></p>
                 </div>
             </div>
         </div>

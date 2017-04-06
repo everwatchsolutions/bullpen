@@ -1268,8 +1268,8 @@ BOOTSTRAP EXTEND
 	background-color: #f6f6f6;
 	background-image: -webkit-linear-gradient(#f6f6f6 0%, white 45%);
 	background-image: linear-gradient(#f6f6f6 0%, white 45%);
-	border-bottom: 1px solid #E9E9E6;
-	border-top: 3px solid #EDEDED;
+	/*border-bottom: 1px solid #E9E9E6;
+	border-top: 3px solid #EDEDED;*/
 	z-index: 1000;
 }
 
@@ -1503,7 +1503,7 @@ BOOTSTRAP EXTEND
 
 	html.sidebar-left-collapsed.fixed .sidebar-left .nano {
 		background: #1d2127;
-		box-shadow: -5px 0 0 #2f3139 inset;
+		/*box-shadow: -5px 0 0 #2f3139 inset;*/
 	}
 
 	html.sidebar-left-collapsed.fixed .sidebar-left .nano:hover {
@@ -6823,7 +6823,7 @@ body .ui-pnotify.icon-nb .notification .ui-pnotify-icon > span {
 	text-transform: uppercase;
 	font-weight: 300;
 	font-size: 11px;
-	color: #0088cc;
+	color: #ed1c24;
 	border-right: 1px solid #e4e4e4;
 	display: inline-block;
 	padding-right: 8px;
@@ -12711,7 +12711,7 @@ ul.widget-todo-list li:last-child {
 }
 
 .form-group-invisible.focus .control-label-invisible {
-	color: #0088cc;
+	color: #ed1c24;
 }
 
 .form-group-invisible .control-label-invisible {

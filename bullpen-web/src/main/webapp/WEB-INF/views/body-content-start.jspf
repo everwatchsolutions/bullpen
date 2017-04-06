@@ -1,18 +1,12 @@
 <section role="main" class="content-body">
-    <header class="page-header">
+    <header class="page-header" style="background:#1d2127; border-bottom-color:#ed1c24;">
         <h2>${pageName}</h2>
 
         <div class="right-wrapper pull-right">
-            <ol class="breadcrumbs">
-                <li>
-                    <a href="/dashboard">
-                        <i class="fa fa-home"></i>
-                    </a>
-                </li>
-                <li><span>${pageName}</span></li>
-            </ol>&nbsp;&nbsp;&nbsp;
+            <div class="header-right">
+                <span class="separator"></span>
 
-            <!--<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-calendar-o"></i></a> --->
+            </div>
         </div>
     </header>
     <%@include file="message-alert.jspf" %>
