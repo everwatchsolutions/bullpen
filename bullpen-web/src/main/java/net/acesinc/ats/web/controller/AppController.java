@@ -90,8 +90,14 @@ public class AppController {
 
         Company c = userRepo.findByEmail(user.getName()).getCompany();
         List<Application> applications = c.getApplications();
-        Application appForDeletion = applications.get(applications.indexOf(new Application(name, description)));
+        Application appForDeletion = null ;//= applications.get(applications.indexOf(new Application(name, description)));
 
+        for(Application a: applications)
+        {
+            if(a.getName().equals(name) && a.getDescription().equals(description))
+                appForDeletion = a;
+        }
+        
         if (appForDeletion != null) {
                 applications.remove(appForDeletion);
         }
