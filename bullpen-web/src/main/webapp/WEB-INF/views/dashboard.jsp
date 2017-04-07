@@ -26,9 +26,8 @@
                 </div>
                 <img src="/assets/images/image-not-found.png" alt="...">
                 <div class="caption">
-                    <p>${item.description}</p>
-                    <p><a href="${item.url.address}" class="btn btn-sm btn-primary" role="button">Launch!</a>
-                        <a href="#more-info-modal${item.id}"  class="modal-with-form btn btn-sm btn-default" role="button">More Info</a></p>
+                    <p><a href="${item.url.address}" class="btn btn-sm btn-primary" role="button"><i class="fa fa-rocket" aria-hidden="true"></i> Launch</a>
+                        <a href="#more-info-modal${item.id}"  class="modal-with-form btn btn-sm btn-default" role="button"><i class="fa fa-info-circle" aria-hidden="true"></i></a></p>
                 </div>
             </div>
         </div>
