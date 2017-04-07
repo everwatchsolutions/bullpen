@@ -54,9 +54,6 @@ public class AppController {
         @RequestParam("poc[][phone]") String[] phones) {
         model.addAttribute("pageName", "Dashboard");
         
-         System.out.println(Arrays.toString(emails));
-         System.out.println(Arrays.toString(names));
-         System.out.println(Arrays.toString(phones));
        
         User u = userRepo.findByEmail(user.getName());
         Company c = u.getCompany();

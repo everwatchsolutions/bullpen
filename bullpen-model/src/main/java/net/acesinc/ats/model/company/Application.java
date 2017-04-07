@@ -18,6 +18,7 @@ import net.acesinc.ats.model.common.Website;
 public class Application {
     
     private String name;
+    private String id;
     private Website url;
     private String description;
     private StoredFile screenshot;
@@ -25,6 +26,7 @@ public class Application {
 
     public Application(String name, String description) {
         this.name = name;
+        this.id = name.replaceAll("\\s+","");
         this.description = description;
     }
 
@@ -67,6 +69,15 @@ public class Application {
     public void setUrl(Website url) {
         this.url = url;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    
     
     
     
