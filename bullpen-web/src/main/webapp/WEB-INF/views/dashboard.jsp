@@ -28,7 +28,7 @@
                 <div class="caption">
                     <p>${item.description}</p>
                     <p><a href="${item.url.address}" class="btn btn-sm btn-primary" role="button">Launch!</a>
-                        <a href="#more-info-modal${item.name}"  class="modal-with-form btn btn-sm btn-default" role="button">More Info</a></p>
+                        <a href="#more-info-modal${item.id}"  class="modal-with-form btn btn-sm btn-default" role="button">More Info</a></p>
                 </div>
             </div>
         </div>
