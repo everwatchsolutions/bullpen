@@ -6,10 +6,6 @@
 package net.acesinc.ats.web.service;
 
 import java.text.SimpleDateFormat;
-import net.acesinc.ats.model.candidate.Candidate;
-
-import net.acesinc.ats.model.candidate.notes.CandidateNote;
-import net.acesinc.ats.model.candidate.notes.CandidateTextNote;
 import net.acesinc.ats.model.company.Company;
 import net.acesinc.ats.model.company.CompanyInvite;
 
@@ -88,7 +84,7 @@ public abstract class EmailService {
         // Create the HTML body using Thymeleaf 
         final String htmlContent = this.templatingEngine.process("welcome-email.html", ctx);
 
-        String subject = "Welcome to PolarisATS";
+        String subject = "Welcome to Bullpen";
         sendEmail(user.getEmail(), noReplyEmailAddress, subject, htmlContent);
     }
 
@@ -103,7 +99,7 @@ public abstract class EmailService {
         // Create the HTML body using Thymeleaf 
         final String htmlContent = this.templatingEngine.process("password-reset.html", ctx);
 
-        String subject = "Password Reset for PolarisATS";
+        String subject = "Password Reset for Bullpen";
 
         log.info("Sending password reset email to [ " + req.getEmail() + " ] with resetToken [ " + req.getId() + " ]");
         sendEmail(req.getEmail(), noReplyEmailAddress, subject, htmlContent);
@@ -120,7 +116,7 @@ public abstract class EmailService {
         // Create the HTML body using Thymeleaf 
         final String htmlContent = this.templatingEngine.process("company-invite.html", ctx);
 
-        String subject = "You've been invited to the " + invite.getInvitedToCompany().getName() + " ATS!";
+        String subject = "You've been invited to the " + invite.getInvitedToCompany().getName() + " Bullpen Business Platform!";
 
         log.info("Sending Company Invite for [ " + invite.getInvitedToCompany().getName() + " ] to [ " + invite.getEmailInvited() + " ] with invite token [ " + invite.getId() + " ]");
         sendEmail(invite.getEmailInvited(), noReplyEmailAddress, subject, htmlContent);

@@ -79,7 +79,7 @@
             </div>
         </div>
 
-        <p class="text-center text-muted mt-md mb-md">&copy; Copyright 2014. All Rights Reserved.</p>
+        <p class="text-center text-muted mt-md mb-md">&copy; Copyright. All Rights Reserved.</p>
     </div>
 </section>
 <!-- end: page -->
