@@ -1,4 +1,4 @@
-cd apache-tomcat-8.5.13/webapps/ #CD into your tom cat webapps folder
+cd  /opt/apache-tomcat-8.5.13/webapps/ #CD into your tom cat webapps folder
 rm -f ROOT.war #remove the war file and folder
 rm -rf ROOT
 cd ..
