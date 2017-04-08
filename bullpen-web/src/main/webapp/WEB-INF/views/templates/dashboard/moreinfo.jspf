@@ -7,7 +7,9 @@
         <div class="panel-body">
             <div class="form-group mt-lg">
 
-                <label class="col-sm-12 control-label">Description: ${item.description}</label><br>
+                <label class="col-sm-12 control-label">${item.description}</label><br>
+
+                <u class="col-sm-12 control-label">POC:</u><br/>
 
                 <label class="col-sm-12 control-label">Name: ${item.POCs[0].name}</label><br>
 

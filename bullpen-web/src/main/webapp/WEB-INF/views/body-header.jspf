@@ -4,12 +4,13 @@
     <div class="logo-container">
         <a href="/" class="logo">
             <!--<img src="/assets/images/ats-logo-no-text-35h.png" height="35" alt="Polaris ATS Logo" />-->
-            <img src="/assets/images/marketplace-logo.png" height="40" alt="Polaris ATS Logo" />
+            <img src="/assets/images/logo.png" height="40" alt="Polaris ATS Logo" />
 
         </a>
     </div>
     <div class="header-right">
     <!-- start: search & user box -->
+    <span class="separator"></span>
     <div id="userbox" class="userbox">
         <a href="#" data-toggle="dropdown" style="color:white">
             <div class="profile-info" data-lock-name="${user.firstName} ${user.lastName}" data-lock-email="${user.email}">
