@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : index
     Created on : Aug 12, 2014, 2:19:19 PM
     Author     : andrewserff
@@ -12,20 +12,17 @@
 
 <%@include file="header-end.jspf" %>
 <%@include file="body-start.jspf" %>
-
-
+<c:if test="${firstComp != null}"><h1>${firstComp.getName()}</h1></c:if>
+<h1></h1>
 <!-- start: page -->
 <section class="body-sign">
-    <div class="center-sign">
-        <a href="/" class="logo pull-left">
-            <img src="/assets/images/ats-logo-no-text.png" height="54" alt="Polaris ATS Logo" />
+    <div class="center-sign" align="center">
+        <a href="/" class="logo row">
+            <img src="/assets/images/logo.png" height="60" alt="Polaris ATS Logo" />
         </a>
-
-        <div class="panel panel-sign">
-            <div class="panel-title-sign mt-xl text-right">
-                <h2 class="title text-uppercase text-bold m-none"><i class="fa fa-user mr-xs"></i> Sign Up</h2>
-            </div>
-            <div class="panel-body">
+        <%@include file="message-alert.jspf" %>
+        <div class="panel">
+            <div class="login-form">
                 <form id="register-form" action="/register" method="post">
                     <c:if test="${invite != null}"><input type="hidden" name="invite" value="${invite.id}"/></c:if>
                     <c:if test="${(param.error != null && SPRING_SECURITY_LAST_EXCEPTION.message != null) || errMessage != null}">
@@ -33,12 +30,12 @@
                             <div class="col-lg-12">
                                 <div class="form-group mb-lg">
                                     <div class="alert alert-danger">
-                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
                                         <strong>Oh snap!</strong> <c:choose>
-                                            <c:when test="${SPRING_SECURITY_LAST_EXCEPTION.message != null}">${SPRING_SECURITY_LAST_EXCEPTION.message}</c:when>
-                                            <c:when test="${errMessage != null}">${errMessage}</c:when>
-                                            <c:otherwise>An error occurred</c:otherwise>
-                                        </c:choose>
+                                        <c:when test="${SPRING_SECURITY_LAST_EXCEPTION.message != null}">${SPRING_SECURITY_LAST_EXCEPTION.message}</c:when>
+                                        <c:when test="${errMessage != null}">${errMessage}</c:when>
+                                        <c:otherwise>An error occurred</c:otherwise>
+                                    </c:choose>
                                     </div>
                                 </div>
                             </div>
@@ -52,7 +49,7 @@
                                     <p>We aren't taking any new registrations at the moment. If you are interested in our product, please sign up for the newsletter on the <a href='//polarisats.com'>Homepage</a> and we'll get in touch as soon as we are allowing new signups!</p>
                                     <p>Thanks for your patience!</p>
                                     <p style="text-align: center">The <img style="vertical-align: bottom"src="/assets/images/ats-logo-no-text-25h.png"/> Team</p>
-                                    
+
                                 </div>
                             </div>
                         </c:when>
@@ -63,87 +60,20 @@
                                     <p>We are only accepting registrations via Invite at the moment. If your company already uses PolarisATS, please have your administrator add you. If you are interested in our product, please sign up for the newsletter on the <a href='//polarisats.com'>Homepage</a> and we'll get in touch as soon as we are allowing new signups!</p>
                                     <p>Thanks for your patience!</p>
                                     <p style="text-align: center">The <img style="vertical-align: bottom"src="/assets/images/ats-logo-no-text-25h.png"/> Team</p>
-                                    
+
                                 </div>
                             </div>
                         </c:when>
                         <c:otherwise>
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="panel panel-transparent">
-                                        <div class="panel-heading">
-                                            <span class="panel-title" >Account Info</span>
-                                        </div>
-                                        <div class="">
-                                            <div class="form-group mb-none">
-                                                <div class="row">
-                                                    <div class="col-sm-6 mb-lg">
-                                                        <label>First Name</label>
-                                                        <input name="firstName" value="${firstName}" type="text" class="form-control input-lg" placeholder="ex: Frodo" />
-                                                    </div>
-                                                    <div class="col-sm-6 mb-lg">
-                                                        <label>Last Name</label>
-                                                        <input name="lastName"  value="${lastName}" type="text" class="form-control input-lg" placeholder="ex: Baggins" />
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group mb-lg">
-                                                <label>E-mail Address</label>
-                                                <div class="input-group input-group-icon">
-                                                    <input name="email" type="email" class="form-control input-lg" <c:if test="${email_notInvite != null}">value='${email_notInvite}'</c:if> placeholder="ex: frodo.baggins@theshire.net" <c:if test="${email != null}">value='${email}' disabled</c:if>/>
-                                                        <span class="input-group-addon">
-                                                            <span class="icon icon-lg">
-                                                                <i class="fa fa-envelope"></i>
-                                                            </span>
-                                                        </span>
-                                                    </div>
-                                                    <!--<input name="email" type="email" class="form-control input-lg" placeholder="ex: frodo.baggins@theshire.net"/>-->
-                                                </div>
-
-                                                <div class="form-group mb-none">
-                                                    <div class="row">
-                                                        <div class="col-sm-6 mb-lg">
-                                                            <label>Password</label>
-                                                            <div class="input-group input-group-icon">
-                                                                <input name="password" type="password" class="form-control input-lg" value="${password}"/>
-                                                                <span class="input-group-addon">
-                                                                    <span class="icon icon-lg">
-                                                                        <i class="fa fa-lock"></i>
-                                                                    </span>
-                                                                </span>
-                                                            </div>
-                                                            <!--<input name="password" type="password" class="form-control input-lg" />-->
-                                                        </div>
-                                                        <div class="col-sm-6 mb-lg">
-                                                            <label>Password Confirmation</label>
-                                                            <div class="input-group input-group-icon">
-                                                                <input name="password_confirm" type="password" class="form-control input-lg"/>
-                                                                <span class="input-group-addon">
-                                                                    <span class="icon icon-lg">
-                                                                        <i class="fa fa-lock"></i>
-                                                                    </span>
-                                                                </span>
-                                                            </div>
-                                                            <!--<input name="password_confirm" type="password" class="form-control input-lg" />-->
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-
-                                <div class="row">
+                            <c:if test="${firstUser}">
+                                <div class="row companyInfo">
                                     <div class="col-lg-12">
                                         <div class="panel panel-transparent">
                                             <div class="panel-heading">
                                                 <span class="panel-title" >Company Info</span>
-                                            <c:if test="${company == null && registrationMode == 'inviteOnly'}">
-                                                <p style="color: red">Please note, we are only accepting registrations via Invite at the moment. If your company already uses PolarisATS, please have your administrator add you.</p>
-                                            </c:if>
+                                                <c:if test="${company == null && registrationMode == 'inviteOnly'}">
+                                                    <p style="color: red">Please note, we are only accepting registrations via Invite at the moment. If your company already uses PolarisATS, please have your administrator add you.</p>
+                                                </c:if>
                                             </div>
                                             <div class="">
                                                 <div class="form-group mb-lg">
@@ -171,16 +101,16 @@
                                                         <label>State</label>
                                                         <div class="input-group input-group-icon">
                                                             <select name='companyState' data-plugin-selectTwo class="form-control populate input-lg placeholder" data-plugin-options='{"placeholder": "Select a State", "allowClear": true }' <c:if test="${company != null || registrationMode == 'inviteOnly'}">disabled</c:if>>
-                                                            <c:forEach var="state" items="${states}">
-                                                                <option value="${state.abbreviation}" <c:if test="${state.abbreviation.equals(company.primaryAddress.state)}">selected</c:if>>${state.name}</option>
-                                                            </c:forEach>
-                                                        </select>
+                                                                <c:forEach var="state" items="${states}">
+                                                                    <option value="${state.abbreviation}" <c:if test="${state.abbreviation.equals(company.primaryAddress.state)}">selected</c:if>>${state.name}</option>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-sm-3 mb-lg">
-                                                    <label>Zip Code</label>
-                                                    <div class="input-group input-group-icon">
-                                                        <input name="companyZipcode" type="text" class="form-control input-lg " <c:if test="${company != null || registrationMode == 'inviteOnly'}">value="${company.primaryAddress.postalCode}" disabled</c:if>/>
+                                                    <div class="col-sm-3 mb-lg">
+                                                        <label>Zip Code</label>
+                                                        <div class="input-group input-group-icon">
+                                                            <input name="companyZipcode" type="text" class="form-control input-lg " <c:if test="${company != null || registrationMode == 'inviteOnly'}">value="${company.primaryAddress.postalCode}" disabled</c:if>/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -188,18 +118,77 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-sm-8">
-                                        <div class="checkbox-custom checkbox-default">
-                                            <input id="agreeTerms" name="agreeterms" type="checkbox"/>
-                                            <label for="AgreeTerms">I agree with <a href="#">terms of use</a></label>
+                            </c:if>
+                            <div class="row accountInfo">
+                                <div class="col-lg-12">
+                                    <div class="panel panel-transparent">
+                                        <div class="panel-heading">
+                                            <span class="panel-title" >Create Bullpen Account</span>
+                                        </div>
+                                        <div class="">
+                                            <div class="form-group mb-none">
+                                                <div class="row">
+                                                    <div class="col-sm-6 mb-lg">
+                                                        <label>First Name</label>
+                                                        <input name="firstName" value="${firstName}" type="text" class="form-control input-lg" placeholder="ex: Frodo" />
+                                                    </div>
+                                                    <div class="col-sm-6 mb-lg">
+                                                        <label>Last Name</label>
+                                                        <input name="lastName"  value="${lastName}" type="text" class="form-control input-lg" placeholder="ex: Baggins" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group mb-lg">
+                                                <label>E-mail Address</label>
+                                                <div class="input-group input-group-icon">
+                                                    <input name="email" type="email" class="form-control input-lg" <c:if test="${email_notInvite != null}">value='${email_notInvite}'</c:if> placeholder="ex: frodo.baggins@theshire.net" <c:if test="${email != null}">value='${email}' disabled</c:if>/>
+                                                    <span class="input-group-addon">
+                                                            <span class="icon icon-lg">
+                                                                <i class="fa fa-envelope"></i>
+                                                            </span>
+                                                        </span>
+                                                </div>
+                                                <!--<input name="email" type="email" class="form-control input-lg" placeholder="ex: frodo.baggins@theshire.net"/>-->
+                                            </div>
+
+                                            <div class="form-group mb-none">
+                                                <div class="row">
+                                                    <div class="col-sm-6 mb-lg">
+                                                        <label>Password</label>
+                                                        <div class="input-group input-group-icon">
+                                                            <input name="password" type="password" class="form-control input-lg" value="${password}"/>
+                                                            <span class="input-group-addon">
+                                                                    <span class="icon icon-lg">
+                                                                        <i class="fa fa-lock"></i>
+                                                                    </span>
+                                                                </span>
+                                                        </div>
+                                                        <!--<input name="password" type="password" class="form-control input-lg" />-->
+                                                    </div>
+                                                    <div class="col-sm-6 mb-lg">
+                                                        <label>Password Confirmation</label>
+                                                        <div class="input-group input-group-icon">
+                                                            <input name="password_confirm" type="password" class="form-control input-lg"/>
+                                                            <span class="input-group-addon">
+                                                                    <span class="icon icon-lg">
+                                                                        <i class="fa fa-lock"></i>
+                                                                    </span>
+                                                                </span>
+                                                        </div>
+                                                        <!--<input name="password_confirm" type="password" class="form-control input-lg" />-->
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-4 text-right">
-                                        <button type="submit" class="btn btn-primary hidden-xs">Sign Up</button>
-                                        <button type="submit" class="btn btn-primary btn-block btn-lg visible-xs mt-lg">Sign Up</button>
-                                    </div>
                                 </div>
+                            </div>
+
+                            <div class="row">
+                                <button type="submit" class="btn btn-danger hidden-xs">Sign Up</button>
+                                <button type="submit" class="btn btn-primary btn-block btn-lg visible-xs mt-lg">Sign Up</button>
+                            </div>
                         </c:otherwise>
                     </c:choose>
 
@@ -207,12 +196,11 @@
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </form>
             </div>
-            <div class="panel-footer">
-                <p  class="text-center">Already have an account yet? <a href="/login">Sign In!</a>
-            </div>
+            <hr/>
+            <p class="text-center">Already have an account yet? <a href="/login">Sign In!</a>
         </div>
 
-        <p class="text-center text-muted mt-md mb-md">&copy; Copyright PolarisATS ${currentYear}. All Rights Reserved.</p>
+        <p class="text-center text-muted mt-md mb-md">&copy; Copyright Bullpen ${currentYear}. All Rights Reserved.</p>
     </div>
 </section>
 <!-- end: page -->
@@ -234,16 +222,16 @@
 
 <!-- Reload the invite if there was an error when they submited the form -->
 <script>
-$( document ).ready(function() {
-    var s="${invite_error}";  
-   
-   if(s.length > 0)
-   {
-       
-       location.assign("register?companyInvite="+s)
-       
-    }
-});
-    
+    $( document ).ready(function() {
+        var s="${invite_error}";
+
+        if(s.length > 0)
+        {
+
+            location.assign("register?companyInvite="+s)
+
+        }
+    });
+
 </script>
 <%@include file="body-end.jspf" %>

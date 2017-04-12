@@ -10,6 +10,7 @@ import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import net.acesinc.ats.model.common.Address;
 import net.acesinc.ats.model.company.Company;
@@ -70,9 +71,21 @@ public class UserController {
     @Value("${ats.registrationMode}")
     private String registrationMode;
     private SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
+    private Company primaryCompany = null;
+    private Boolean firstUser = false;
 
+    private void checkFirstCompany(){
+        Iterable<Company> allCompanies = companyRepo.findAll();
+        Iterator companyIterator = allCompanies.iterator();
+        if (companyIterator.hasNext()){
+            primaryCompany = (Company) companyIterator.next();
+        }else {
+            firstUser = true;
+        }
+    }
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String getRegistrationPage(@RequestParam(value = "companyInvite", required = false) String companyInvite, ModelMap model) {
+        checkFirstCompany();
         if (companyInvite != null && !companyInvite.isEmpty()) {
             CompanyInvite c = companyInviteRepo.findOne(companyInvite);
             if (c != null) {
@@ -88,30 +101,25 @@ public class UserController {
         model.addAttribute("pageName", "Register");
         model.addAttribute("registrationMode", registrationMode);
         model.addAttribute("currentYear", yearFormat.format(new Date()));
+        model.addAttribute("firstUser", firstUser);
 
+        if (firstUser){
+            log.debug("NO COMPANIES YET - FIRST USER -> MUST CREATE COMPANY");
+            model.addAttribute("message", "Welcome to Bullpen! You are the first user, so you need to enter your company's information in addition to creating your account.");
+        }
         return "register";
+
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String registerUser(@RequestParam("email") String email, @RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName, @RequestParam("password") String password, @RequestParam("password_confirm") String password_confirm,
-            @RequestParam("companyName") String companyName, @RequestParam("companyAddress") String companyAddress, @RequestParam("companyCity") String companyCity,
-            @RequestParam("companyState") String companyState, @RequestParam("companyZipcode") String companyZip, @RequestParam(value = "invite", required = false) String invite, ModelMap model, @RequestParam(value = "agreeterms", required = false) String agreeTerms) {
+            @RequestParam(value = "companyName", required = false) String companyName, @RequestParam(value = "companyAddress",required = false) String companyAddress, @RequestParam(value = "companyCity", required = false) String companyCity,
+            @RequestParam(value = "companyState" , required = false) String companyState, @RequestParam(value = "companyZipcode",required = false) String companyZip, @RequestParam(value = "invite", required = false) String invite, ModelMap model) {
 
         model.addAttribute("states", constants.getStateList());// add state list if page needs to be reloaded
-
+        checkFirstCompany();
         boolean error = false;
 
-        if (agreeTerms == null) {
-            model.addAttribute("error", true);
-            model.addAttribute("errMessage", "Please accept the terms of use");
-
-            model.addAttribute("password", password);
-            model.addAttribute("firstName", firstName);
-            model.addAttribute("lastName", lastName);
-            model.addAttribute("email_notInvite", email);
-
-            error = true;
-        }
         if (password == null || password.trim().isEmpty()) {
             model.addAttribute("error", true);
             model.addAttribute("errMessage", "Please provide a password");
@@ -182,6 +190,7 @@ public class UserController {
         }
         
         if (error) {
+            model.addAttribute("firstUser", firstUser);
             return "register";
         }
 
@@ -212,38 +221,41 @@ public class UserController {
                 model.addAttribute("errMessage", "Sorry, we are only allowing registrations by invite only right now. If your company is already using PolarisATS, please ask your administrator to add you!");
                 return "register";
             }
-            if (companyName != null && !companyName.isEmpty()) {
+            if(firstUser) {
+                if (companyName != null && !companyName.isEmpty()) {
 
-                company = companyRepo.findByNameIgnoreCase(companyName);
-                if (company != null) {
-                    model.addAttribute("error", true);
-                    model.addAttribute("errMessage", "Company " + companyName + " already exists.  Please ask your administrator to add you.");
-                    return "register";
-                } else {
-                    company = new Company();
-                    company.setName(companyName);
-                    try {
-                        company.setShortName(companyController.getDefaultShortName(companyName));
-                    } catch (UnsupportedEncodingException ex) {
-                        log.debug("Error generating Short Name for Company [ " + companyName + " ]", ex);
+                    company = companyRepo.findByNameIgnoreCase(companyName);
+                    if (company != null) {
+                        model.addAttribute("error", true);
+                        model.addAttribute("errMessage", "Company " + companyName + " already exists.  Please ask your administrator to add you.");
+                        return "register";
+                    } else {
+                        company = new Company();
+                        company.setName(companyName);
+                        try {
+                            company.setShortName(companyController.getDefaultShortName(companyName));
+                        } catch (UnsupportedEncodingException ex) {
+                            log.debug("Error generating Short Name for Company [ " + companyName + " ]", ex);
+                        }
+                        Address a = new Address();
+                        a.setAddressLine(companyAddress);
+                        a.setCityName(companyCity);
+                        a.setState(companyState);
+                        a.setPostalCode(companyZip);
+                        a.setLocationName(companyName);
+
+                        company.setPrimaryAddress(a);
+
+                        companyRepo.save(company);
+
+                        constants.createCategory(ConstantsController.UNCATEGORIZED_CATEGORY_NAME, ConstantsController.UNCATEGORIZED_CATEGORY_LABEL, company);
                     }
-                    Address a = new Address();
-                    a.setAddressLine(companyAddress);
-                    a.setCityName(companyCity);
-                    a.setState(companyState);
-                    a.setPostalCode(companyZip);
-                    a.setLocationName(companyName);
-
-                    company.setPrimaryAddress(a);
-
-                    companyRepo.save(company);
-
-                    constants.createCategory(ConstantsController.UNCATEGORIZED_CATEGORY_NAME, ConstantsController.UNCATEGORIZED_CATEGORY_LABEL, company);
+                } else {
+                    model.addAttribute("error", true);
+                    model.addAttribute("errMessage", "You are the first user so must provide a Company Name in order to start using Bullpen.");
+                    model.addAttribute("firstUser", firstUser);
+                    return "register";
                 }
-            } else {
-                model.addAttribute("error", true);
-                model.addAttribute("errMessage", "You must provide a Company Name in order to register a new account.");
-                return "register";
             }
         }
 
@@ -251,6 +263,7 @@ public class UserController {
         if (test != null) {
             log.warn("User tried to register with email that already has an account");
             model.addAttribute("error", true);
+            model.addAttribute("firstUser", firstUser);
             if (test.isEnabled()) {
                 model.addAttribute("errMessage", "Email Address is already registered.  Did you forget your password?");
             } else {
@@ -262,7 +275,12 @@ public class UserController {
             User u = new User();
 
             //set the company they belong to
-            u.setCompany(company);
+            if(firstUser){
+                u.setCompany(company);
+
+            }else{
+                u.setCompany(primaryCompany);
+            }
 
             u.setEmail(email);
             u.setFirstName(firstName);
@@ -270,10 +288,14 @@ public class UserController {
             u.setFullName(u.getFirstName() + " " + u.getLastName());
             u.setPassword(encodePassword(password));
             u.setEmailMD5Hash(DigestUtils.md5Hex(email));
-            if(i != null && i.getRole() != null)
-            u.setAuthorities(i.getRole());
-            else
-            u.setAuthorities("ROLE_ADMIN");//means they are the first company user
+            if(i != null && i.getRole() != null){
+                u.setAuthorities(i.getRole());
+            } else{
+                if(firstUser)
+                    u.setAuthorities("ROLE_ADMIN");//means they are the first company user
+                else
+                    u.setAuthorities("ROLE_USER");
+            }
 //        u.setEnabled(true); //accounts are enabled after email verification
 
             log.info("Registering new user [ " + u.getUsername() + ", " + password + " ]");
@@ -294,6 +316,8 @@ public class UserController {
             return "login";
         }
     }
+
+
 
     @RequestMapping(value = "/email/verify")
     public String verifyEmail(@RequestParam("email") String email, @RequestParam("verifyToken") String verifyToken, ModelMap model) {

@@ -25,7 +25,7 @@
                     <div class="row">
                         <div class="form-group mb-lg">
                             <div class="alert alert-danger">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">�</button>
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
                                 <strong>Oh snap!</strong> <c:choose>
                                 <c:when test="${SPRING_SECURITY_LAST_EXCEPTION.message != null}">${SPRING_SECURITY_LAST_EXCEPTION.message}</c:when>
                                 <c:when test="${errMessage != null}">${errMessage}</c:when>
@@ -99,11 +99,8 @@
             </form>
         </div>
         <br/>
-        <div class="panel-footer">
-            <p class="text-center">Don't have an account yet? <a href="/register">Sign Up!</a>
-        </div>
-
-        <p class="text-center text-muted mt-md mb-md">&copy; Copyright ${currentYear}. All Rights Reserved.</p>
+        <hr/>
+        <p class="text-center">Don't have an account yet? <a href="/register">Sign Up!</a>
     </div>
 </section>
 <!-- end: page -->
