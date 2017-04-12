@@ -48,7 +48,7 @@ public abstract class EmailService {
     private SimpleDateFormat prettyDateFormat = new SimpleDateFormat("dd MMMMM yyyy @ hh:mm aa");
 
     public Context addDefaultInfoToContext(Context ctx, Company company, User user) {
-        String companyLogoUrl = baseUrl + "/assets/images/ats-logo-email.png";
+        String companyLogoUrl = baseUrl + "/assets/images/logo.png";
         if (company != null) {
             if (company.getCompanyLogo() != null) {
                 companyLogoUrl = baseUrl + "/view/file/" + company.getCompanyLogo().getStorageId();
