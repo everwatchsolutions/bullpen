@@ -67,6 +67,7 @@
                             <input class="form-control" type="phone"  id="phone" name="poc[][phone]">
                         </div>
                         <br>
+                        <p>You will be able to upload a screenshot after you create the app.</p>
 
                         <div class="form-group mb-lg col-lg-12">
 

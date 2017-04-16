@@ -24,7 +24,9 @@
             <div class="thumbnail">
                 <div class="panel-heading"><h4>${item.name}</h4>
                 </div>
-                <img src="/assets/images/image-not-found.png" alt="...">
+                <img style="height:300px; width:350px;"
+                <c:choose><c:when test="${item.screenshot != null}">src="/view/file/${item.screenshot.storageId}"</c:when>
+                    <c:otherwise>src="/assets/images/image-not-found.png" alt="..."</c:otherwise></c:choose>>
                 <div class="caption">
                     <p><a href="${item.url.address}" class="btn btn-sm btn-primary" role="button"><i class="fa fa-rocket" aria-hidden="true"></i> Launch</a>
                         <a href="#more-info-modal${item.id}"  class="modal-with-form btn btn-sm btn-default" role="button"><i class="fa fa-info-circle" aria-hidden="true"></i></a></p>

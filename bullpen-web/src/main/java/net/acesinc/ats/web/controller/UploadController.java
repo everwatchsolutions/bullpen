@@ -21,6 +21,7 @@ import net.acesinc.ats.model.candidate.BinaryStorageLocation;
 import net.acesinc.ats.model.candidate.Candidate;
 import net.acesinc.ats.model.common.FileFormat;
 import net.acesinc.ats.model.common.StoredFile;
+import net.acesinc.ats.model.company.Application;
 import net.acesinc.ats.model.company.Company;
 import net.acesinc.ats.model.user.User;
 import net.acesinc.ats.web.data.UploadResponse;
@@ -93,7 +94,51 @@ public class UploadController {
 
         return resp;
     }
-   
+   @RequestMapping(value = "/app/screenshot", method = RequestMethod.POST, produces = {"application/xml", "application/json"})
+    public @ResponseBody
+    UploadResponse handleScreenUpload(Principal user, @RequestParam("file") MultipartFile file,@RequestParam("name") String name,
+            @RequestParam("description") String description) {
+        User u = userRepo.findByEmail(user.getName());
+        Company c = u.getCompany();
+        UploadResponse resp = handleFileUpload(user, file);
+        Application app = null ;
+        List<Application> applications = c.getApplications();
+
+        int item = 0;
+        for(Application a: applications)
+        {
+            if(a.getName().equals(name) && a.getDescription().equals(description)){
+                app = a;
+                item = applications.indexOf(a);
+            }
+        }
+       
+        UploadFile uf = resp.getFiles().get(0);
+        StoredFile screenshot = new StoredFile();
+        screenshot.setDateAdded(new Date());
+        screenshot.setFilename(uf.getName());
+        screenshot.setStorageId(uf.getStorageId());
+        
+        try {
+            screenshot.setFormat(FileFormat.fromMimeType(uf.getContentType()));
+        } catch (Exception e) {
+            //unknown type
+            log.debug("Could not determine the format of file [ " + uf.getName() + " ] with content type [ " + uf.getContentType() + " ]");
+        }
+        
+        app.setScreenshot(screenshot);
+        applications.set(item, app);
+        c.setApplications(applications);
+        companyRepo.save(c);
+        
+
+        
+       
+
+        log.info("screen shot saved");
+
+        return resp;
+    }
     
    
 
