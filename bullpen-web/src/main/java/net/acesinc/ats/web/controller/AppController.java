@@ -47,6 +47,27 @@ public class AppController {
         return "create_app";
     }
     
+    @RequestMapping(value = {"/application"}, method = RequestMethod.GET)
+    public String getApplicationPage(Principal user, ModelMap model, @RequestParam("name") String name,
+            @RequestParam("description") String description) {
+        model.addAttribute("pageName", "Application");
+        
+        User u = userRepo.findByEmail(user.getName());
+        Company c = u.getCompany();
+        
+        Application app = null ;
+        List<Application> applications = c.getApplications();
+
+
+        for(Application a: applications)
+        {
+            if(a.getName().equals(name) && a.getDescription().equals(description))
+                app = a;
+        }
+        model.addAttribute("application", app);
+        return "application";
+    }
+    
     @RequestMapping(value = {"/createapplication"}, method = RequestMethod.POST)
     public String createApp(Principal user, ModelMap model, @RequestParam("name") String name,
             @RequestParam("description") String description,@RequestParam("url") String url,
