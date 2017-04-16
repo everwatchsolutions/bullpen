@@ -1,8 +1,8 @@
 ---
 applications:
-- name: ats-web
+- name: bullpen-web
   memory: 2G
-  path: target/ats-web.war
+  path: target/bullpen-web.war
   random-route: false
   services:
-  - mongo-compose-io
+  - mongo-compose-io-bullpen
