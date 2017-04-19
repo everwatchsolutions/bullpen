@@ -65,6 +65,7 @@ public class AppController {
                 app = a;
         }
         model.addAttribute("application", app);
+        model.addAttribute("poc",app.getPOCs().get(0));//need to change when we have more than 1 poc
         return "application";
     }
     
@@ -100,6 +101,55 @@ public class AppController {
         companyRepo.save(c);
        
         return "redirect:/dashboard";
+    }
+    
+     @RequestMapping(value = {"/saveapplication"}, method = RequestMethod.POST)
+    public String updateApplication(Principal user, ModelMap model, @RequestParam("name") String name,
+            @RequestParam("description") String description,@RequestParam("url") String url,
+            @RequestParam("poc[][name]") String[] names, @RequestParam("poc[][email]") String[] emails,
+        @RequestParam("poc[][phone]") String[] phones,  @RequestParam("id") String id) {
+        model.addAttribute("pageName", "Dashboard");
+        
+        User u = userRepo.findByEmail(user.getName());
+        Company c = u.getCompany();
+        
+        
+         Application app = null;
+         int counter = -1;
+         for(Application a: c.getApplications())
+        {
+            
+            if(a.getId().equals(id))
+            {
+                app =  a;
+                
+            }
+            
+            counter++;
+          
+        }
+         
+         if(app != null){
+         
+        app.setId(name.trim());
+        app.setDescription(description);
+        app.setName(name);
+        Website w = new Website();
+        w.setAddress(url);
+        app.setUrl(w);
+        
+        POC p = app.getPOCs().get(0);
+        p.setEmail(emails[0]);
+        p.setName(names[0]);
+        p.setPhone(phones[0]);
+        app.getPOCs().set(0, p);
+        
+        c.getApplications().set(counter, app);
+        companyRepo.save(c);
+         }
+        
+        return "redirect:/dashboard";
+        
     }
 
     @RequestMapping(value = {"/deleteapplication"}, method = RequestMethod.POST)

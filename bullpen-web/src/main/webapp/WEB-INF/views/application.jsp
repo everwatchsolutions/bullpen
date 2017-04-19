@@ -29,7 +29,7 @@
 
 
     <section class="panel panel-transparent">
-        <form action="/createapplication" method="POST">
+        <form action="/saveapplication" method="POST">
             <div>
                 <div class="form-group mb-lg panel">
                     <div class="panel-heading" align="center">
@@ -49,7 +49,7 @@
 
                         <div class="form-group col-lg-10" style="padding-right: 25px;">
                             <label for="description">Description</label>
-                            <textarea class="form-control" id="description" ame="description" rows="3">${application.description}</textarea>
+                            <textarea class="form-control" id="description" name="description" rows="3">${application.description}</textarea>
                         </div>
 
                           <div class="form-group col-lg-10" style="padding-right: 25px;">
@@ -70,17 +70,17 @@
                         <p>Click the plus to add more than one point of contact.</p> </div>
                     <div class="form-group row col-lg-10" style="padding-left: 30px;">
                         <label for="name" class="col-2 col-form-label">POC Name</label>
-                        <input class="form-control" type="text"  id="name"  name="poc[][name]">
+                        <input class="form-control" type="text"  id="name" value="${poc.name}" name="poc[][name]">
                     </div> <br>
 
                     <div class="form-group row col-lg-10" style="padding-left: 30px;">
                         <label for="example-url-input" class="col-2 col-form-label">POC Email</label>
-                        <input class="form-control" type="email"  name="poc[][email]" id="email">
+                        <input class="form-control" type="email" value="${poc.email}" name="poc[][email]" id="email">
                     </div><br>
 
                     <div class="form-group row col-lg-10" style="padding-left: 30px;">
                         <label for="phone" class="col-2 col-form-label">POC Phone Number</label>
-                        <input class="form-control" type="phone"  id="phone" name="poc[][phone]">
+                        <input class="form-control" type="phone" value="${poc.phone}"  id="phone" name="poc[][phone]">
                     </div>
                     <br>
 
@@ -88,11 +88,12 @@
 
                         <div class="input-group input-group-icon">
                             <div class="pull-right">
-                                <button type="submit" class="btn btn-success">Create Application!</button>
+                                <button type="submit" class="btn btn-success">Update Application!</button>
                             </div>
                         </div>
                     </div>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <input type="hidden" name="id" value="${application.id}"/>
 
 
                 </div>
