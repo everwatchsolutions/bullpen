@@ -20,11 +20,11 @@
 <!-- start: page -->
 <div class="row">
     <c:forEach var="item" items="${apps}" varStatus="appItem">
-        <div class="col-sm-6 col-md-4" align="center">
+        <div class="col-sm-3 col-md-3" align="center">
             <div class="thumbnail">
                 <div class="panel-heading"><h4>${item.name}</h4>
                 </div>
-                <img style="height:300px; width:350px;"
+                <img style="height:140px; width:270px;"
                 <c:choose><c:when test="${item.screenshot != null}">src="/view/file/${item.screenshot.storageId}"</c:when>
                     <c:otherwise>src="/assets/images/image-not-found.png" alt="..."</c:otherwise></c:choose>>
                 <div class="caption">
